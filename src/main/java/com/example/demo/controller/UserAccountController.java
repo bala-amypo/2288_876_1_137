@@ -13,7 +13,7 @@ public class UserAccountController{
         uas.getall();
     }
     @GetMapping("/api/users/gt{id}")
-    public list<UserAccount> getid(@){
+    public optional<UserAccount> getid(@pathvariable long id){
         uas.getall();
     }
 
