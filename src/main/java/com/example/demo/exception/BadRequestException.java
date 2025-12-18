@@ -1,1 +1,1 @@
-pack
+package com.example.demo.exception
