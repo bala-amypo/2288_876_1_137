@@ -9,7 +9,13 @@ public class UserAccountController{
         return uas.createuser(ua);
     }
     @GetMapping("/api/users/gt")
-    public list<
+    public list<UserAccount> getall(){
+        uas.getall();
+    }
+    @GetMapping("/api/users/gt{id}")
+    public list<UserAccount> getid(@){
+        uas.getall();
+    }
 
     public optional<UserAccount>updateuser
 }
