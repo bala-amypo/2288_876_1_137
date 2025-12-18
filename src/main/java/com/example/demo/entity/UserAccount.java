@@ -1,2 +1,10 @@
 package com.explain.demo.entity;
-public class User
+@Entity
+public class UserAccount{
+    @Id
+    private long id;
+    @column(unique=true)
+    private String email;
+    private String ;
+
+}
