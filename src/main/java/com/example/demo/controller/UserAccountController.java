@@ -14,7 +14,7 @@ public class UserAccountController{
     }
     @GetMapping("/api/users/gt{id}")
     public optional<UserAccount> getid(@pathvariable long id){
-        uas.getall();
+        uas.getid(id);
     }
 
     public optional<UserAccount>updateuser
