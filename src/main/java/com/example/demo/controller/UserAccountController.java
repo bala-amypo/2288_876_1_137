@@ -17,12 +17,12 @@ public class UserAccountController{
         uas.getid(id);
     }
     @PutMapping("/api/users/upd{id}")
-    public String updata(@PathVariable long id,@RequestBody UserAccount stu){
-    Optional<Student> student = ser.fetchDataById(id);
+    public String updata(@PathVariable long id,@RequestBody UserAccount ua){
+    Optional<UserAccount> UserA = uas.getid(id);
 
-    if(student.isPresent()){
-     stu.setId(id);
-     ser.createData( stu);
+    if(UserA.isPresent()){
+     usa.setId(id);
+     usa.createuser(ua);
 
      return "Data Updated Successfully";
     }
