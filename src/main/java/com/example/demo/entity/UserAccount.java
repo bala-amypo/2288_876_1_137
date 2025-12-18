@@ -5,6 +5,9 @@ public class UserAccount{
     private long id;
     @column(unique=true)
     private String email;
-    private String ;
+    private String fullname;
+    private Boolean active;
+    private Timestamp create;
+
 
 }
