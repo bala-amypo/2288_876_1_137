@@ -8,6 +8,5 @@ public class UserAccount{
     private String fullname;
     private Boolean active;
     private Timestamp create;
-
-
+    private Timestamp updatedAt;
 }
