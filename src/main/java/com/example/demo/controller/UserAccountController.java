@@ -1,2 +1,5 @@
 package com.example.demo.controller;
-@Rest
+@RestController
+public class UserAccountController{
+    public UserAccount createuser
+}
