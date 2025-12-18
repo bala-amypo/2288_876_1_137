@@ -16,6 +16,6 @@ public class UserAccountController{
     public optional<UserAccount> getid(@pathvariable long id){
         uas.getid(id);
     }
-
-    public optional<UserAccount>updateuser
+    @PutMapping("/api/users/upd{id}")
+    public optional<UserAccount>updateuser 
 }
