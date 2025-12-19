@@ -3,6 +3,8 @@ import java.sql.Timestamp;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 
 @Entity
 public class UserAccount{
@@ -51,7 +53,7 @@ public class UserAccount{
     public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
     }
-    public UserAccount(long iString email, String fullname, Boolean active, Timestamp createdAt, Timestamp updatedAt) {
+    public UserAccount(String email, String fullname, Boolean active, Timestamp createdAt, Timestamp updatedAt) {
         this.email = email;
         this.fullname = fullname;
         this.active = active;
