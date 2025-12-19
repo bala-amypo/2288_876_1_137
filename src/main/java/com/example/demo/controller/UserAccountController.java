@@ -30,7 +30,7 @@ public class UserAccountController {
     }
 
     @GetMapping("/{id}")
-    public UserAccount getById(@PathVariable long id) {
+    public UserAccount getUserById(@PathVariable long id) {
         return uas.getid(id)
                   .orElseThrow(() -> new RuntimeException("User not found"));
     }

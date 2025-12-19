@@ -8,8 +8,8 @@ import com.example.demo.entity.UserAccount;
 
 public interface UserAccountService {
 
-    public UserAccount createuser(UserAccount ua);
-    public List<UserAccount> getall();
-    public Optional<UserAccount> getid(long id);
+    public UserAccount createUser(UserAccount ua);
+    public List<UserAccount> getAllUsers();
+    public Optional<UserAccount> getUserById(long id);
     public void deactivateUser(long id);
 }
