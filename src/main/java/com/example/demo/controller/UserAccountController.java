@@ -46,5 +46,7 @@ public class UserAccountController{
         }
     }
     @PutMapping("/onde{id}")
-    public deuser
+    public void deactivateUser(@PathVariable Long id){
+            
+    }
 }

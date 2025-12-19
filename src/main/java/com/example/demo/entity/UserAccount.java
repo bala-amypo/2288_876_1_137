@@ -12,7 +12,7 @@ public class UserAccount{
     @Column(unique=true)
     private String email;
     private String fullname;
-    private Boolean active;
+    private Boolean active=true;
     private Timestamp create;
     private Timestamp updatedAt;
     public long getId() {
