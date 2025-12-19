@@ -24,17 +24,15 @@ public  class UserAccountServiceimp implements UserAccountService {
     public Optional<UserAccount> getid(long id){
         return uar.findById(id);
     }
-    
-    @Override
    @Override
-public void deactivateUser(long id) {
-    Optional<UserAccount> userOpt = uar.findById(id);
-    if (userOpt.isPresent()) {
-        UserAccount user = userOpt.get();
-        user.setActive(false);
-        uar.save(user);
+    public void deactivateUser(long id) {
+        Optional<UserAccount> userOpt = uar.findById(id);
+        if (userOpt.isPresent()) {
+            UserAccount user = userOpt.get();
+            user.setActive(false);
+            uar.save(user);
+        }
     }
-}
 
     
 }
