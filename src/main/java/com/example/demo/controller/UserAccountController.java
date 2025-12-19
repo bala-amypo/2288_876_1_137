@@ -22,7 +22,7 @@ public class UserAccountController {
     // CREATE
     @PostMapping
     public UserAccount createUser(@RequestBody UserAccount ua) {
-        return uas.createuser(ua);
+        return uas.createUser(ua);
     }
 
     // GET ALL
@@ -40,7 +40,7 @@ public class UserAccountController {
 
     // UPDATE
     @PutMapping("/{id}")
-    public String update(@PathVariable long id, @RequestBody UserAccount ua) {
+    public String updateUser(@PathVariable long id, @RequestBody UserAccount ua) {
         UserAccount existing = uas.getid(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
