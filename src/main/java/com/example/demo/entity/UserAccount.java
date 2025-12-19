@@ -3,7 +3,7 @@ import java.sql.Timestamp;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-
+import java.time.LocalDateTime;
 @Entity
 public class UserAccount{
     @Id
@@ -12,8 +12,8 @@ public class UserAccount{
     private String email;
     private String fullname;
     private Boolean active=true;
-    private Timestamp createdAt;
-    private Timestamp updatedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
     public long getId() {
         return id;
     }
