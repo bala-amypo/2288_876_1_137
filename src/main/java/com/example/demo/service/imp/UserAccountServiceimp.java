@@ -9,40 +9,45 @@ import com.example.demo.repository.UserAccountRepository;
 import com.example.demo.entity.UserAccount;
 import com.example.demo.service.UserAccountService;
 @Service
-public  class UserAccountServiceimp implements UserAccountService {
+public class UserAccountServiceimp implements UserAccountService {
+
     @Autowired
-    UserAccountRepository uar;
+    private UserAccountRepository uar;
+
+    // CREATE
     @Override
-    public UserAccount createUser(UserAccount ua){
+    public UserAccount createUser(UserAccount ua) {
         return uar.save(ua);
     }
+
+    // GET ALL
     @Override
-    public List<UserAccount> getAllUsers(){
+    public List<UserAccount> getAllUsers() {
         return uar.findAll();
     }
-    @Override
-    public Optional<UserAccount> getUserById(long id){
-        return uar.findById(id);
-    }
-   @Override
-    public void deactivateUser(long id) {
-        Optional<UserAccount> userOpt = uar.findById(id);
-        if (userOpt.isPresent()) {
-            UserAccount user = userOpt.get();
-            user.setActive(false);
-            uar.save(user);
-        }
-    }
-    @Override
-    public String updateUser(long id,UserAccount ua){
-        UserAccount existing = uas.getid(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
 
-        existing.setEmail(ua.getEmail());
+    // GET BY ID
+    @Override
+    public UserAccount getUserById(long id) {
+        return uar.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
+    // UPDATE
+    @Override
+    public UserAccount updateUser(long id, UserAccount ua) {
+        UserAccount existing = getUserById(id);
+
         existing.setFullname(ua.getFullname());
 
-        uas.createUser(existing);
-        return "Data Updated Successfully";
+        return uar.save(existing);
     }
-    
+
+    // DEACTIVATE
+    @Override
+    public void deactivateUser(long id) {
+        UserAccount user = getUserById(id);
+        user.setActive(false);
+        uar.save(user);
+    }
 }
