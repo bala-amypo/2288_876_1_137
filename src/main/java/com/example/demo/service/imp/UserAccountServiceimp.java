@@ -13,11 +13,11 @@ public  class UserAccountServiceimp implements UserAccountService {
     @Autowired
     UserAccountRepository uar;
     @Override
-    public UserAccount createuser(UserAccount ua){
+    public UserAccount createUser(UserAccount ua){
         return uar.save(ua);
     }
     @Override
-    public List<UserAccount> getall(){
+    public List<UserAccount> getAllUsers(){
         return uar.findAll();
     }
     @Override
