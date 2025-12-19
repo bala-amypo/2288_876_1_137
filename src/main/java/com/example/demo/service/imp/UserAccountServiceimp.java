@@ -25,7 +25,7 @@ public  class UserAccountServiceimp implements UserAccountService {
         return uar.findById(id);
     }
    @Override
-    public void deactivate(long id) {
+    public void deactivateUser(long id) {
         Optional<UserAccount> userOpt = uar.findById(id);
         if (userOpt.isPresent()) {
             UserAccount user = userOpt.get();
@@ -33,6 +33,9 @@ public  class UserAccountServiceimp implements UserAccountService {
             uar.save(user);
         }
     }
-
+    @Override
+    public String updateUser(long id,UserAccount ua){
+        
+    }
     
 }
