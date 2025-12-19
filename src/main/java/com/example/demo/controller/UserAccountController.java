@@ -10,11 +10,11 @@ public class UserAccountController{
     }
     @GetMapping("/api/users/gt")
     public list<UserAccount> getall(){
-        uas.getall();
+        return uas.getall();
     }
     @GetMapping("/api/users/gt{id}")
     public optional<UserAccount> getid(@pathvariable long id){
-        uas.getid(id);
+        return uas.getid(id);
     }
     @PutMapping("/api/users/upd{id}")
     public String updata(@PathVariable long id,@RequestBody UserAccount ua){
