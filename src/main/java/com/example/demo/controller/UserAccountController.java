@@ -41,14 +41,7 @@ public class UserAccountController {
     // UPDATE
     @PutMapping("/{id}")
     public String updateUser(@PathVariable long id, @RequestBody UserAccount ua) {
-        UserAccount existing = uas.getid(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        existing.setEmail(ua.getEmail());
-        existing.setFullname(ua.getFullname());
-
-        uas.createUser(existing);
-        return "Data Updated Successfully";
+        uas.updateUser
     }
 
     // DEACTIVATE
