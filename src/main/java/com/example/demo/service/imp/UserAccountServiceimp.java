@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.demo.Repository.UserAccountRepository;
 import com.example.demo.entity.UserAccount;
-import com.example.demo.serveice.UserAccountService;
+import com.example.demo.service.UserAccountService;
 
 public  class UserAccountServiceimp implements UserAccountService {
     @Autowired

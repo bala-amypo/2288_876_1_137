@@ -1,4 +1,4 @@
-package com.explain.demo.entity;
+package com.example.demo.entity;
 import java.security.Timestamp;
 
 import jakarta.persistence.Column;
