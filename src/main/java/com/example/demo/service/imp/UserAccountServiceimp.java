@@ -29,7 +29,7 @@ public  class UserAccountServiceimp implements UserAccountService {
     public void deactivateUser(Long id){
         UserAccount ss=getid(id);
         ss.setActive(false);
-        
+        uar.save(ss);
     }
     
 }
