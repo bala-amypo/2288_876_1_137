@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.stereotype.Service;
 import com.example.demo.Repository.UserAccountRepository;
 import com.example.demo.entity.UserAccount;
 import com.example.demo.service.UserAccountService;
-
+@Service
 public  class UserAccountServiceimp implements UserAccountService {
     @Autowired
     UserAccountRepository uar;
@@ -26,10 +26,15 @@ public  class UserAccountServiceimp implements UserAccountService {
     }
     
     @Override
-    public void deactivateUser(Long id){
-        UserAccount ss=getid(id);
-        ss.setActive(false);
-        uar.save(ss);
+   @Override
+public void deactivateUser(long id) {
+    Optional<UserAccount> userOpt = uar.findById(id);
+    if (userOpt.isPresent()) {
+        UserAccount user = userOpt.get();
+        user.setActive(false);
+        uar.save(user);
     }
+}
+
     
 }
