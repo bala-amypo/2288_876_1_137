@@ -35,7 +35,14 @@ public  class UserAccountServiceimp implements UserAccountService {
     }
     @Override
     public String updateUser(long id,UserAccount ua){
-        
+        UserAccount existing = uas.getid(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        existing.setEmail(ua.getEmail());
+        existing.setFullname(ua.getFullname());
+
+        uas.createUser(existing);
+        return "Data Updated Successfully";
     }
     
 }
