@@ -1,33 +1,48 @@
 package com.example.demo.controller;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import com.example.demo.entity.UserAccount;
+import com.example.demo.serveice.UserAccountService;
 @RestController
+
 @RequestMapping("/api/users")
 public class UserAccountController{
-    @AutoWired 
+    @Autowired
     UserAccountService uas;
     @PostMapping("/api/users/pot")
     public UserAccount createuser(@RequestBody UserAccount ua){
         return uas.createuser(ua);
     }
     @GetMapping("/api/users/gt")
-    public list<UserAccount> getall(){
+    public List<UserAccount> getall(){
         return uas.getall();
     }
     @GetMapping("/api/users/gt{id}")
-    public optional<UserAccount> getid(@pathvariable long id){
+    public Optional<UserAccount> getid(@PathVariable long id){
         return uas.getid(id);
     }
     @PutMapping("/api/users/upd{id}")
     public String updata(@PathVariable long id,@RequestBody UserAccount ua){
-    Optional<UserAccount> UserA = uas.getid(id);
+        Optional<UserAccount> UserA = uas.getid(id);
 
-    if(UserA.isPresent()){
-     usa.setId(id);
-     usa.createuser(ua);
+        if(UserA.isPresent()){
+            ua.setId(id);
+            uas.createuser(ua);
 
-     return "Data Updated Successfully";
-    }
-    else{
+            return "Data Updated Successfully";
+        }
+        else{
 
-        return id+ "not found";
+            return id+ "not found";
+        }
     }
 }
