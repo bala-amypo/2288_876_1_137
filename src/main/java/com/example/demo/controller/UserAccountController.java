@@ -18,19 +18,19 @@ import com.example.demo.serveice.UserAccountService;
 public class UserAccountController{
     @Autowired
     UserAccountService uas;
-    @PostMapping("/api/users/pot")
+    @PostMapping("/pot")
     public UserAccount createuser(@RequestBody UserAccount ua){
         return uas.createuser(ua);
     }
-    @GetMapping("/api/users/gt")
+    @GetMapping("/gt")
     public List<UserAccount> getall(){
         return uas.getall();
     }
-    @GetMapping("/api/users/gt{id}")
+    @GetMapping("/gt{id}")
     public Optional<UserAccount> getid(@PathVariable long id){
         return uas.getid(id);
     }
-    @PutMapping("/api/users/upd{id}")
+    @PutMapping("/upd{id}")
     public String updata(@PathVariable long id,@RequestBody UserAccount ua){
         Optional<UserAccount> UserA = uas.getid(id);
 
