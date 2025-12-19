@@ -12,4 +12,5 @@ public interface UserAccountService {
     public List<UserAccount> getAllUsers();
     public Optional<UserAccount> getUserById(long id);
     public void deactivateUser(long id);
+    public String updateUser(@PathVariable long id, @RequestBody UserAccount ua);
 }
