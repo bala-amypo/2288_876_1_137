@@ -12,7 +12,7 @@ public class UserAccount{
     private String email;
     private String fullname;
     private Boolean active=true;
-    private Timestamp create;
+    private Timestamp createdAt;
     private Timestamp updatedAt;
     public long getId() {
         return id;
