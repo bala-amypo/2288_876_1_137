@@ -19,35 +19,29 @@ public class UserAccountController {
     @Autowired
     UserAccountService uas;
 
-    // CREATE
     @PostMapping
     public UserAccount createUser(@RequestBody UserAccount ua) {
         return uas.createUser(ua);
     }
 
-    // GET ALL
     @GetMapping
-    public List<UserAccount> getAll() {
-        return uas.getall();
+    public List<UserAccount> getAllUsers() {
+        return uas.getAllUsers();
     }
 
-    // GET BY ID
     @GetMapping("/{id}")
     public UserAccount getById(@PathVariable long id) {
         return uas.getid(id)
                   .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
-    // UPDATE
     @PutMapping("/{id}")
     public String updateUser(@PathVariable long id, @RequestBody UserAccount ua) {
-        uas.updateUser
+        return uas.updateUser(id,ua);
     }
 
-    // DEACTIVATE
     @PutMapping("/{id}/deactivate")
     public String deactivateUser(@PathVariable long id) {
-        uas.deactivateUser(id);
-        return "User deactivated successfully";
+        return uas.deactivateUser(id);
     }
 }
