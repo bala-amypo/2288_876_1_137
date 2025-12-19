@@ -47,7 +47,7 @@ public class UserAccountController {
         existing.setEmail(ua.getEmail());
         existing.setFullname(ua.getFullname());
 
-        uas.createuser(existing);
+        uas.createUser(existing);
         return "Data Updated Successfully";
     }
 
