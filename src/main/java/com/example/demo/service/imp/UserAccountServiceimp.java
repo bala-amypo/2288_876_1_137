@@ -21,11 +21,11 @@ public  class UserAccountServiceimp implements UserAccountService {
         return uar.findAll();
     }
     @Override
-    public Optional<UserAccount> getid(long id){
+    public Optional<UserAccount> getUserById(long id){
         return uar.findById(id);
     }
    @Override
-    public void deactivateUser(long id) {
+    public void deactivate(long id) {
         Optional<UserAccount> userOpt = uar.findById(id);
         if (userOpt.isPresent()) {
             UserAccount user = userOpt.get();
