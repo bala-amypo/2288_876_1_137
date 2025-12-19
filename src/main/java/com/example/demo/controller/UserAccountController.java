@@ -18,19 +18,19 @@ import com.example.demo.service.UserAccountService;
 public class UserAccountController{
     @Autowired
     UserAccountService uas;
-    @PostMapping("/pot")
+    @PostMapping
     public UserAccount createuser(@RequestBody UserAccount ua){
         return uas.createuser(ua);
     }
-    @GetMapping("/gt")
+    @GetMapping
     public List<UserAccount> getall(){
         return uas.getall();
     }
-    @GetMapping("/gt{id}")
+    @GetMapping("/{id}")
     public Optional<UserAccount> getid(@PathVariable long id){
         return uas.getid(id);
     }
-    @PutMapping("/upd{id}")
+    @PutMapping("/{id}")
     public String updata(@PathVariable long id,@RequestBody UserAccount ua){
         Optional<UserAccount> UserA = uas.getid(id);
 
@@ -45,7 +45,7 @@ public class UserAccountController{
             return id+ "not found";
         }
     }
-    @PutMapping("/onde{id}")
+    @PutMapping("/{id}")
     public void deactivateUser(@PathVariable Long id) {
         uas.deactivateUser(id);
     }
