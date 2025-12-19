@@ -13,41 +13,48 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.example.demo.entity.UserAccount;
 import com.example.demo.service.UserAccountService;
 @RestController
-
 @RequestMapping("/api/users")
-public class UserAccountController{
+public class UserAccountController {
+
     @Autowired
     UserAccountService uas;
+
+    // CREATE
     @PostMapping
-    public UserAccount createuser(@RequestBody UserAccount ua){
+    public UserAccount createUser(@RequestBody UserAccount ua) {
         return uas.createuser(ua);
     }
+
+    // GET ALL
     @GetMapping
-    public List<UserAccount> getall(){
+    public List<UserAccount> getAll() {
         return uas.getall();
     }
+
+    // GET BY ID
     @GetMapping("/{id}")
-    public Optional<UserAccount> getid(@PathVariable long id){
-        return uas.getid(id);
+    public UserAccount getById(@PathVariable long id) {
+        return uas.getid(id)
+                  .orElseThrow(() -> new RuntimeException("User not found"));
     }
+
+    // UPDATE
     @PutMapping("/{id}")
-    public String updata(@PathVariable long id,@RequestBody UserAccount ua){
-        Optional<UserAccount> UserA = uas.getid(id);
+    public String update(@PathVariable long id, @RequestBody UserAccount ua) {
+        UserAccount existing = uas.getid(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
-        if(UserA.isPresent()){
-            ua.setId(id);
-            uas.createuser(ua);
+        existing.setEmail(ua.getEmail());
+        existing.setFullname(ua.getFullname());
 
-            return "Data Updated Successfully";
-        }
-        else{
-
-            return id+ "not found";
-        }
+        uas.createuser(existing);
+        return "Data Updated Successfully";
     }
-    @PutMapping("/{id}")
-    public void deactivateUser(@PathVariable Long id) {
+
+    // DEACTIVATE
+    @PutMapping("/{id}/deactivate")
+    public String deactivateUser(@PathVariable long id) {
         uas.deactivateUser(id);
+        return "User deactivated successfully";
     }
-
 }
