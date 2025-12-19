@@ -14,26 +14,20 @@ public class UserAccountServiceimp implements UserAccountService {
     @Autowired
     private UserAccountRepository uar;
 
-    // CREATE
     @Override
     public UserAccount createUser(UserAccount ua) {
         return uar.save(ua);
     }
 
-    // GET ALL
     @Override
     public List<UserAccount> getAllUsers() {
         return uar.findAll();
     }
-
-    // GET BY ID
     @Override
     public UserAccount getUserById(long id) {
         return uar.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
-
-    // UPDATE
     @Override
     public UserAccount updateUser(long id, UserAccount ua) {
         UserAccount existing = getUserById(id);
@@ -43,7 +37,6 @@ public class UserAccountServiceimp implements UserAccountService {
         return uar.save(existing);
     }
 
-    // DEACTIVATE
     @Override
     public void deactivateUser(long id) {
         UserAccount user = getUserById(id);
