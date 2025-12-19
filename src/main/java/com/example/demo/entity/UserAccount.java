@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 @Entity
 public class UserAccount{
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(unique=true)
     private String email;
@@ -38,11 +39,11 @@ public class UserAccount{
     public void setActive(Boolean active) {
         this.active = active;
     }
-    public Timestamp getCreate() {
-        return create;
+    public Timestamp getCreatedAt() {
+        return createdAt;
     }
-    public void setCreate(Timestamp create) {
-        this.create = create;
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
     }
     public Timestamp getUpdatedAt() {
         return updatedAt;
@@ -50,12 +51,11 @@ public class UserAccount{
     public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
     }
-    public UserAccount(long id, String email, String fullname, Boolean active, Timestamp create, Timestamp updatedAt) {
-        this.id = id;
+    public UserAccount(long iString email, String fullname, Boolean active, Timestamp createdAt, Timestamp updatedAt) {
         this.email = email;
         this.fullname = fullname;
         this.active = active;
-        this.create = create;
+        this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
     public UserAccount() {
