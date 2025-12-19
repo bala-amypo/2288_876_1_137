@@ -50,7 +50,8 @@ public class UserAccount{
     public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
     }
-    public UserAccount(String email, String fullname, Boolean active, Timestamp createdAt, Timestamp updatedAt) {
+    public UserAccount(long id,String email, String fullname, Boolean active, Timestamp createdAt, Timestamp updatedAt) {
+        this.id = id;
         this.email = email;
         this.fullname = fullname;
         this.active = active;
@@ -58,6 +59,5 @@ public class UserAccount{
         this.updatedAt = updatedAt;
     }
     public UserAccount() {
-    }
-    
+    }   
 }
