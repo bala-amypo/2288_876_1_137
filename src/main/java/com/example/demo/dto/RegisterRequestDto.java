@@ -1,4 +1,4 @@
-package com.example.demo.dto;
+package com.example.demo.web.dto;
 
 public class RegisterRequestDto {
 
@@ -6,14 +6,7 @@ public class RegisterRequestDto {
     private String fullName;
     private String password;
 
-    public RegisterRequestDto() {
-    }
-
-    public RegisterRequestDto(String email, String fullName, String password) {
-        this.email = email;
-        this.fullName = fullName;
-        this.password = password;
-    }
+    public RegisterRequestDto() {}
 
     public String getEmail() {
         return email;
