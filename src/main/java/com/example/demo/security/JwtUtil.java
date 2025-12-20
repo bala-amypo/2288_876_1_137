@@ -1,52 +1,32 @@
 package com.example.demo.security;
 
-import io.jsonwebtoken.Claims;
+import java.util.Date;
+
+import org.springframework.stereotype.Component;
+
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
-import java.util.Date;
-import java.util.Map;
-
+@Component
 public class JwtUtil {
 
-    private final String SECRET_KEY = "secret-key-for-testing";
-    private final long EXPIRATION_TIME = 1000 * 60 * 60; // 1 hour
+    private static final String SECRET_KEY = "SAAS_SECRET_KEY_123";
+    private static final long EXPIRATION_TIME = 1000 * 60 * 60; // 1 hour
 
-    // ✅ MUST HAVE NO-ARG CONSTRUCTOR
-    public JwtUtil() {
-    }
-
-    public String generateToken(Map<String, Object> claims, String subject) {
+    public String generateToken(String email) {
         return Jwts.builder()
-                .setClaims(claims)
-                .setSubject(subject)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setSubject(email)
+                .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
                 .compact();
     }
 
-    public String getUsername(String token) {
-        return getClaims(token).getSubject();
-    }
-
-    public long getExpirationMillis() {
-        return EXPIRATION_TIME;
-    }
-
-    public boolean isTokenValid(String token, String username) {
-        String extractedUsername = getUsername(token);
-        return extractedUsername.equals(username) && !isTokenExpired(token);
-    }
-
-    public Claims getClaims(String token) {
+    public String extractUsername(String token) {
         return Jwts.parser()
                 .setSigningKey(SECRET_KEY)
                 .parseClaimsJws(token)
-                .getBody();
-    }
-
-    private boolean isTokenExpired(String token) {
-        return getClaims(token).getExpiration().before(new Date());
+                .getBody()
+                .getSubject();
     }
 }
