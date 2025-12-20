@@ -32,7 +32,7 @@ public class PermissionServiceimp implements PermissionService {
     }
 
     @Override
-    public Role updateRole(long id, Role role) {
+    public Permission updatePermission(long id, Permission permission){
         Role existing = uar.findById(id)
                 .orElseThrow(() -> new RuntimeException("Role not found"));
 
@@ -40,8 +40,8 @@ public class PermissionServiceimp implements PermissionService {
     }
 
     @Override
-    public void deactivateRole(long id) {
-        Role user = uar.findById(id)
+    public void deactivatePermission(Long id){
+        Role permission = uar.findById(id)
                 .orElseThrow(() -> new RuntimeException("Role not found"));
 
         user.setActive(false);

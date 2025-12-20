@@ -41,10 +41,10 @@ public class RoleServiceimp implements RoleService {
 
     @Override
     public void deactivateRole(long id) {
-        Role user = uar.findById(id)
+        Role role = uar.findById(id)
                 .orElseThrow(() -> new RuntimeException("Role not found"));
 
-        user.setActive(false);
+        r.setActive(false);
         uar.save(user);
     }
 }
