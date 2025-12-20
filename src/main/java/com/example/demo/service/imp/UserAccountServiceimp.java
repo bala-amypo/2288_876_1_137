@@ -28,10 +28,16 @@ public class UserAccountServiceimp implements UserAccountService {
         return uar.findAll();
     }
 
+    // @Override
+    // public UserAccount getUserById(long id) {
+    //     return uar.findById(id);
+    // }
     @Override
     public UserAccount getUserById(long id) {
-        return uar.findById(id);
-    }
+        return uar.findById(id)
+            .orElseThrow(() -> new RuntimeException("User not found"));
+}
+
 
     @Override
     public UserAccount updateUser(long id, UserAccount ua) {

@@ -26,10 +26,15 @@ public class UserAccountController {
     }
 
     @GetMapping("/{id}")
+    // public UserAccount getUserById(@PathVariable long id) {
+    //     return uas.getUserById(id)
+    //             .orElseThrow(() -> new RuntimeException("User not found"));
+    // }
+    @GetMapping("/{id}")
     public UserAccount getUserById(@PathVariable long id) {
-        return uas.getUserById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        return uas.getUserById(id);
     }
+
 
     @PutMapping("/{id}")
     public UserAccount updateUser(@PathVariable long id, @RequestBody UserAccount user) {
