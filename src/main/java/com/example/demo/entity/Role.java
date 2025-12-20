@@ -11,6 +11,8 @@ public class Role{
     @Id
     private long id;
     @column(unique=true)
-    private String rolename;
-    private 
+    private String roleName;
+    private String description;
+    private Boolean active;
+    
 }
