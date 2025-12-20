@@ -10,7 +10,7 @@ import com.example.demo.service.PermissionService;
 
 @RestController
 @RequestMapping("/api/permissions")
-public class UserAccountController {
+public class PermissionController {
 
     @Autowired
     private PermissionService uas;
@@ -26,8 +26,7 @@ public class UserAccountController {
     }
 
     @GetMapping("/{id}")
-    public Permission getPermissionById(Long id)
-(@PathVariable long id) {
+    public Permission getPermissionById(@PathVariable long id){
         return uas.getUserById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
