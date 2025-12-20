@@ -33,11 +33,11 @@ public class PermissionController {
 
     @PutMapping("/{id}")
     public Permission updatePermission(long id, Permission permission){
-        return uas.updateUser(id, perm);
+        return uas.updatePermission(id, permission);
     }
 
     @PutMapping("/{id}/deactivate")
-    public String deactivateUser(@PathVariable long id) {
+    public void deactivatePermission(@PathVariable long id){
         uas.deactivateUser(id);
         return "User deactivated successfully";
     }
