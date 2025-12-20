@@ -36,18 +36,15 @@ public class UserAccountServiceimp implements UserAccountService {
     @Override
     public Role updateRole(long id, Role role) {
         Role existing = uar.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        existing.setFullname(ua.getFullname());
-        existing.setUpdatedAt(LocalDateTime.now());
+                .orElseThrow(() -> new RuntimeException("Role not found"));
 
         return uar.save(existing);
     }
 
     @Override
-    public void deactivateUser(long id) {
-        UserAccount user = uar.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+    public void deactivateRole(long id) {
+        Role user = uar.findById(id)
+                .orElseThrow(() -> new RuntimeException("Role not found"));
 
         user.setActive(false);
         user.setUpdatedAt(LocalDateTime.now());
