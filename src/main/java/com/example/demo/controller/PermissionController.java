@@ -22,11 +22,12 @@ public class UserAccountController {
 
     @GetMapping
     public List<Permission> getAllPermissions() {
-        return uas.getAllUsers();
+        return uas.getAllPermissions();
     }
 
     @GetMapping("/{id}")
-    public UserAccount getUserById(@PathVariable long id) {
+    public Permission getPermissionById(Long id)
+(@PathVariable long id) {
         return uas.getUserById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
