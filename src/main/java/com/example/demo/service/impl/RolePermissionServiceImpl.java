@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import com.example.demo.entity.Permission;
 import com.example.demo.entity.Role;
 import com.example.demo.entity.RolePermission;
+import com.example.demo.exception.BadRequestException;
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.PermissionRepository;
 import com.example.demo.repository.RolePermissionRepository;
 import com.example.demo.repository.RoleRepository;
@@ -19,7 +21,7 @@ public class RolePermissionServiceImpl implements RolePermissionService {
     private final RoleRepository roleRepository;
     private final PermissionRepository permissionRepository;
 
-    // ✅ Constructor injection (ORDER AS REQUESTED)
+    // ✅ REQUIRED CONSTRUCTOR (ORDER AS PER SAAS)
     public RolePermissionServiceImpl(
             RolePermissionRepository rolePermissionRepository,
             RoleRepository roleRepository,
@@ -33,17 +35,17 @@ public class RolePermissionServiceImpl implements RolePermissionService {
     public RolePermission grantPermission(RolePermission mapping) {
 
         Role role = roleRepository.findById(mapping.getRole().getId())
-                .orElseThrow(() -> new RuntimeException("Role not found"));
+                .orElseThrow(() -> new BadRequestException("Role not found"));
 
         if (!Boolean.TRUE.equals(role.getActive())) {
-            throw new RuntimeException("Role is inactive");
+            throw new BadRequestException("Role is inactive");
         }
 
         Permission permission = permissionRepository.findById(mapping.getPermission().getId())
-                .orElseThrow(() -> new RuntimeException("Permission not found"));
+                .orElseThrow(() -> new BadRequestException("Permission not found"));
 
         if (!Boolean.TRUE.equals(permission.getActive())) {
-            throw new RuntimeException("Permission is inactive");
+            throw new BadRequestException("Permission is inactive");
         }
 
         mapping.setRole(role);
@@ -60,7 +62,8 @@ public class RolePermissionServiceImpl implements RolePermissionService {
     @Override
     public RolePermission getMappingById(Long id) {
         return rolePermissionRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("RolePermission mapping not found"));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("RolePermission mapping not found"));
     }
 
     @Override
