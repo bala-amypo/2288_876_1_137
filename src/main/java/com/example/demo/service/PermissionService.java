@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import com.example.demo.entity.Role;
 
-public interface RoleService {
+public interface PermissionService {
 
     Permission createPermission(Permission permission);
 
