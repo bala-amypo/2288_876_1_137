@@ -6,12 +6,12 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.entity.Role;
-import com.example.demo.repository.RoleRepository;
-import com.example.demo.service.RoleService;
+import com.example.demo.entity.UserAccount;
+import com.example.demo.repository.UserAccountRepository;
+import com.example.demo.service.UserAccountService;
 
 @Service
-public class Serviceimp implements UserAccountService {
+public class UserAccountServiceimp implements UserAccountService {
 
     @Autowired
     private UserAccountRepository uar;
