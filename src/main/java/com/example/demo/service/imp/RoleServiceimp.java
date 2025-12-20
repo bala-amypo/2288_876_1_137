@@ -11,15 +11,13 @@ import com.example.demo.repository.RoleRepository;
 import com.example.demo.service.RoleService;
 
 @Service
-public class UserAccountServiceimp implements UserAccountService {
+public class RoleServiceimp implements RoleService {
 
     @Autowired
     private RoleRepository uar;
 
     @Override
     public Role createRole(Role role) {
-        role.setCreatedAt(LocalDateTime.now());
-        role.setUpdatedAt(LocalDateTime.now());
         return uar.save(role);
     }
 
