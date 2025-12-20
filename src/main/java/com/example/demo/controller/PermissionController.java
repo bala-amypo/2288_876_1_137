@@ -13,7 +13,7 @@ import com.example.demo.service.PermissionService;
 public class UserAccountController {
 
     @Autowired
-    private UserAccountService uas;
+    private PermissionService uas;
 
     @PostMapping
     public UserAccount createUser(@RequestBody UserAccount ua) {
