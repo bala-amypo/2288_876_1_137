@@ -1,8 +1,7 @@
 package com.example.demo.service.imp;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,37 +13,36 @@ import com.example.demo.service.PermissionService;
 public class PermissionServiceimp implements PermissionService {
 
     @Autowired
-    private PermissionRepository uar;
+    private PermissionRepository repository;
 
     @Override
-    public Permission createPermission(Permission permission){
-        return uar.save(permission);
+    public Permission createPermission(Permission permission) {
+        return repository.save(permission);
     }
 
     @Override
-    public List<Permission> getAllPermissions(){
-        return uar.findAll();
+    public List<Permission> getAllPermissions() {
+        return repository.findAll();
     }
 
     @Override
-    public Permission getPermissionById(long id){
-        return uar.findById(id);
+    public Permission getPermissionById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Permission not found"));
     }
 
     @Override
-    public Permission updatePermission(long id, Permission permission){
-        Role existing = uar.findById(id)
-                .orElseThrow(() -> new RuntimeException("Role not found"));
-
-        return uar.save(existing);
+    public Permission updatePermission(Long id, Permission permission) {
+        Permission existing = getPermissionById(id);
+        existing.setPermissionKey(permission.getPermissionKey());
+        existing.setDescription(permission.getDescription());
+        return repository.save(existing);
     }
 
     @Override
-    public void deactivatePermission(Long id){
-        Role permission = uar.findById(id)
-                .orElseThrow(() -> new RuntimeException("Role not found"));
-
+    public void deactivatePermission(Long id) {
+        Permission permission = getPermissionById(id);
         permission.setActive(false);
-        uar.save(permission);
+        repository.save(permission);
     }
 }

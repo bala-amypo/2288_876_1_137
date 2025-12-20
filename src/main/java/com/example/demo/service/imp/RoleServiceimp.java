@@ -1,8 +1,7 @@
 package com.example.demo.service.imp;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,37 +13,36 @@ import com.example.demo.service.RoleService;
 public class RoleServiceimp implements RoleService {
 
     @Autowired
-    private RoleRepository uar;
+    private RoleRepository repository;
 
     @Override
     public Role createRole(Role role) {
-        return uar.save(role);
+        return repository.save(role);
     }
 
     @Override
     public List<Role> getAllRoles() {
-        return uar.findAll();
+        return repository.findAll();
     }
 
     @Override
     public Role getRoleById(long id) {
-        return uar.findById(id);
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Role not found"));
     }
 
     @Override
     public Role updateRole(long id, Role role) {
-        Role existing = uar.findById(id)
-                .orElseThrow(() -> new RuntimeException("Role not found"));
-
-        return uar.save(existing);
+        Role existing = getRoleById(id);
+        existing.setRoleName(role.getRoleName());
+        existing.setDescription(role.getDescription());
+        return repository.save(existing);
     }
 
     @Override
     public void deactivateRole(long id) {
-        Role role = uar.findById(id)
-                .orElseThrow(() -> new RuntimeException("Role not found"));
-
+        Role role = getRoleById(id);
         role.setActive(false);
-        uar.save(role);
+        repository.save(role);
     }
 }

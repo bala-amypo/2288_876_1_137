@@ -13,31 +13,30 @@ import com.example.demo.service.RoleService;
 public class RoleController {
 
     @Autowired
-    private RoleService uas;
+    private RoleService service;
 
     @PostMapping
     public Role createRole(@RequestBody Role role) {
-        return uas.createRole(role);
+        return service.createRole(role);
     }
 
     @GetMapping
     public List<Role> getAllRoles() {
-        return uas.getAllRoles();
+        return service.getAllRoles();
     }
 
     @GetMapping("/{id}")
     public Role getRoleById(@PathVariable long id) {
-        return uas.getRoleById(id)
-                .orElseThrow(() -> new RuntimeException("Role not found"));
+        return service.getRoleById(id);
     }
 
     @PutMapping("/{id}")
     public Role updateRole(@PathVariable long id, @RequestBody Role role) {
-        return uas.updateRole(id, role);
+        return service.updateRole(id, role);
     }
 
     @PutMapping("/{id}/deactivate")
     public void deactivateRole(@PathVariable long id) {
-        uas.deactivateRole(id);
+        service.deactivateRole(id);
     }
 }
