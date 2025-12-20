@@ -16,12 +16,12 @@ public class UserAccountController {
     private PermissionService uas;
 
     @PostMapping
-    public UserAccount createUser(@RequestBody UserAccount ua) {
-        return uas.createUser(ua);
+    public Permission createPermission(@RequestBody Permission permission) {
+        return uas.createPermission(permission);
     }
 
     @GetMapping
-    public List<UserAccount> getAllUsers() {
+    public List<Permission> getAllPermissions() {
         return uas.getAllUsers();
     }
 
