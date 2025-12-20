@@ -15,7 +15,7 @@ public class UserAccountController {
     @Autowired
     private UserAccountService uas;
 
-    @PostMapping
+    @PostMapping()
     public UserAccount createUser(@RequestBody UserAccount ua) {
         return uas.createUser(ua);
     }
