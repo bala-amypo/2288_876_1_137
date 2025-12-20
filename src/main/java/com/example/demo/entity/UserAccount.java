@@ -12,7 +12,7 @@ import jakarta.persistence.Id;
 public class UserAccount {
 
     @Id
-    private Long id;
+    private long id;
 
     @Column(nullable = false, unique = true)
     private String email;
