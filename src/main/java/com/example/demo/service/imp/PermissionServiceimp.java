@@ -22,12 +22,12 @@ public class PermissionServiceimp implements PermissionService {
     }
 
     @Override
-    public List<Role> getAllRoles() {
+    public List<Permission> getAllPermissions(){
         return uar.findAll();
     }
 
     @Override
-    public Role getRoleById(long id) {
+    public Permission getPermissionById(long id){
         return uar.findById(id);
     }
 
