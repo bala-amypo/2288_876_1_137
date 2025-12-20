@@ -8,7 +8,7 @@ public class Role {
 
     @Id
     private Long id;
-
+    
     @Column(unique = true, nullable = false)
     private String roleName;
 
