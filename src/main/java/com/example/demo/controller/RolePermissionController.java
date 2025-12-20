@@ -17,7 +17,7 @@ public class RoleController {
 
     @PostMapping
     public Role createRole(@RequestBody Role role) {
-        return uas.createRole(ua);
+        return uas.createRole(role);
     }
 
     @GetMapping
