@@ -1,4 +1,4 @@
-package com.example.demo.service.imp;
+package com.example.demo.service.impl;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import com.example.demo.repository.PermissionRepository;
 import com.example.demo.service.PermissionService;
 
 @Service
-public class PermissionServiceimp implements PermissionService {
+public class PermissionServiceImpl implements PermissionService {
 
     @Autowired
     private PermissionRepository repository;
