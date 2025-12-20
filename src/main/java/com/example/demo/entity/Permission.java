@@ -7,11 +7,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 @Entity
-public class {
+public class Permission{
     @Id
     private long id;
     @Column(unique=true)
-    private String roleName;
+    private String permissionKey;
     private String description;
     private Boolean active;
+    
 }
