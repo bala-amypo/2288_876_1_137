@@ -37,8 +37,7 @@ public class RoleController {
     }
 
     @PutMapping("/{id}/deactivate")
-    public String deactivateRole(@PathVariable long id) {
+    public void deactivateRole(@PathVariable long id) {
         uas.deactivateRole(id);
-        return "User deactivated successfully";
     }
 }

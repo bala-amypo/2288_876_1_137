@@ -37,8 +37,7 @@ public class UserAccountController {
     }
 
     @PutMapping("/{id}/deactivate")
-    public String deactivateUser(@PathVariable long id) {
+    public void deactivateUser(@PathVariable long id) {
         uas.deactivateUser(id);
-        return "User deactivated successfully";
     }
 }

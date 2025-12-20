@@ -38,7 +38,6 @@ public class PermissionController {
 
     @PutMapping("/{id}/deactivate")
     public void deactivatePermission(@PathVariable long id){
-        uas.deactivateUser(id);
-        return "User deactivated successfully";
+        uas.deactivatePermission(id);
     }
 }
