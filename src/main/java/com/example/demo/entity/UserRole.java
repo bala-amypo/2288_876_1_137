@@ -1,81 +1,81 @@
-// package com.explain.demo.entity;
+package com.explain.demo.entity;
 
 
-// import java.time.LocalDateTime;
+import java.time.LocalDateTime;
 
-// import jakarta.persistence.Entity;
-// import jakarta.persistence.GeneratedValue;
-// import jakarta.persistence.GenerationType;
-// import jakarta.persistence.Id;
-// import jakarta.persistence.JoinColumn;
-// import jakarta.persistence.ManyToOne;
-// import jakarta.persistence.PrePersist;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
 
-// @Entity
-// public class UserRole {
+@Entity
+public class UserRole {
 
-//     @Id
-//     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//     private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-//     @ManyToOne
-//     @JoinColumn(name = "user_id", nullable = false)
-//     private UserAccount user;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserAccount user;
 
-//     @ManyToOne
-//     @JoinColumn(name = "role_id", nullable = false)
-//     private Role role;
+    @ManyToOne
+    @JoinColumn(name = "role_id", nullable = false)
+    private Role role;
 
-//     private LocalDateTime assignedAt;
+    private LocalDateTime assignedAt;
 
-//     // ✅ Default Constructor
-//     public UserRole() {
-//     }
+    // ✅ Default Constructor
+    public UserRole() {
+    }
 
-//     // ✅ Parameterized Constructor
-//     public UserRole(Long id, UserAccount user, Role role, LocalDateTime assignedAt) {
-//         this.id = id;
-//         this.user = user;
-//         this.role = role;
-//         this.assignedAt = assignedAt;
-//     }
+    // ✅ Parameterized Constructor
+    public UserRole(Long id, UserAccount user, Role role, LocalDateTime assignedAt) {
+        this.id = id;
+        this.user = user;
+        this.role = role;
+        this.assignedAt = assignedAt;
+    }
 
-//     @PrePersist
-//     public void onCreate() {
-//         this.assignedAt = LocalDateTime.now();
-//     }
+    @PrePersist
+    public void onCreate() {
+        this.assignedAt = LocalDateTime.now();
+    }
 
-//     // Getters and Setters
+    // Getters and Setters
 
-//     public Long getId() {
-//         return id;
-//     }
+    public Long getId() {
+        return id;
+    }
 
-//     public void setId(Long id) {
-//         this.id = id;
-//     }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-//     public UserAccount getUser() {
-//         return user;
-//     }
+    public UserAccount getUser() {
+        return user;
+    }
 
-//     public void setUser(UserAccount user) {
-//         this.user = user;
-//     }
+    public void setUser(UserAccount user) {
+        this.user = user;
+    }
 
-//     public Role getRole() {
-//         return role;
-//     }
+    public Role getRole() {
+        return role;
+    }
 
-//     public void setRole(Role role) {
-//         this.role = role;
-//     }
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
-//     public LocalDateTime getAssignedAt() {
-//         return assignedAt;
-//     }
+    public LocalDateTime getAssignedAt() {
+        return assignedAt;
+    }
 
-//     public void setAssignedAt(LocalDateTime assignedAt) {
-//         this.assignedAt = assignedAt;
-//     }
-// }
+    public void setAssignedAt(LocalDateTime assignedAt) {
+        this.assignedAt = assignedAt;
+    }
+}
