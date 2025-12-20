@@ -1,4 +1,4 @@
-package com.example.demo.service.imp;
+package com.example.demo.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -11,7 +11,7 @@ import com.example.demo.repository.UserAccountRepository;
 import com.example.demo.service.UserAccountService;
 
 @Service
-public class UserAccountServiceimp implements UserAccountService {
+public class UserAccountServiceImpl implements UserAccountService {
 
     @Autowired
     private UserAccountRepository uar;

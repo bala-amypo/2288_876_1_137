@@ -1,4 +1,4 @@
-package com.example.demo.service.imp;
+package com.example.demo.service.impl;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import com.example.demo.repository.UserRoleRepository;
 import com.example.demo.service.UserRoleService;
 
 @Service
-public class UserRoleServiceimp implements UserRoleService {
+public class UserRoleServiceImpl implements UserRoleService {
 
     private final UserRoleRepository userRoleRepository;
     private final UserAccountRepository userAccountRepository;
