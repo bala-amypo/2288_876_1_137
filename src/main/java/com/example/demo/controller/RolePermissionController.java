@@ -21,19 +21,19 @@ public class RoleController {
     }
 
     @GetMapping
-    public List<UserAccount> getAllRoles() {
+    public List<Role> getAllRoles() {
         return uas.getAllRoles();
     }
 
     @GetMapping("/{id}")
-    public UserAccount getRoleById(@PathVariable long id) {
+    public Role getRoleById(@PathVariable long id) {
         return uas.getRoleById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
     @PutMapping("/{id}")
-    public UserAccount updateUser(@PathVariable long id, @RequestBody UserAccount ua) {
-        return uas.updateUser(id, ua);
+    public Role updateRole(@PathVariable long id, @RequestBody Role ua) {
+        return uas.updateRole(id, ua);
     }
 
     @PutMapping("/{id}/deactivate")
