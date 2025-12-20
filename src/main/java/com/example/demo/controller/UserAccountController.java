@@ -16,8 +16,8 @@ public class UserAccountController {
     private UserAccountService uas;
 
     @PostMapping
-    public UserAccount createUser(@RequestBody UserAccount ua) {
-        return uas.createUser(ua);
+    public UserAccount createUser(@RequestBody UserAccount user) {
+        return uas.createUser(user);
     }
 
     @GetMapping
@@ -32,8 +32,8 @@ public class UserAccountController {
     }
 
     @PutMapping("/{id}")
-    public UserAccount updateUser(@PathVariable long id, @RequestBody UserAccount ua) {
-        return uas.updateUser(id, ua);
+    public UserAccount updateUser(@PathVariable long id, @RequestBody UserAccount user) {
+        return uas.updateUser(id, user);
     }
 
     @PutMapping("/{id}/deactivate")
