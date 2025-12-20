@@ -2,33 +2,37 @@ package com.example.demo.service.impl;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Role;
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.RoleRepository;
 import com.example.demo.service.RoleService;
 
 @Service
 public class RoleServiceImpl implements RoleService {
 
-    @Autowired
-    private RoleRepository repository;
+    private final RoleRepository roleRepository;
+
+    // ✅ REQUIRED CONSTRUCTOR (SAAS RULE)
+    public RoleServiceImpl(RoleRepository roleRepository) {
+        this.roleRepository = roleRepository;
+    }
 
     @Override
     public Role createRole(Role role) {
-        return repository.save(role);
+        return roleRepository.save(role);
     }
 
     @Override
     public List<Role> getAllRoles() {
-        return repository.findAll();
+        return roleRepository.findAll();
     }
 
     @Override
     public Role getRoleById(long id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Role not found"));
+        return roleRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Role not found"));
     }
 
     @Override
@@ -36,13 +40,13 @@ public class RoleServiceImpl implements RoleService {
         Role existing = getRoleById(id);
         existing.setRoleName(role.getRoleName());
         existing.setDescription(role.getDescription());
-        return repository.save(existing);
+        return roleRepository.save(existing);
     }
 
     @Override
     public void deactivateRole(long id) {
         Role role = getRoleById(id);
         role.setActive(false);
-        repository.save(role);
+        roleRepository.save(role);
     }
 }
