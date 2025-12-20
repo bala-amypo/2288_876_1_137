@@ -47,7 +47,6 @@ public class UserAccountServiceimp implements UserAccountService {
                 .orElseThrow(() -> new RuntimeException("Role not found"));
 
         user.setActive(false);
-        user.setUpdatedAt(LocalDateTime.now());
         uar.save(user);
     }
 }
