@@ -25,7 +25,7 @@ public class UserAccountController {
         return uas.getAllUsers();
     }
 
-    @GetMapping("/{id}")
+    // @GetMapping("/{id}")
     // public UserAccount getUserById(@PathVariable long id) {
     //     return uas.getUserById(id)
     //             .orElseThrow(() -> new RuntimeException("User not found"));

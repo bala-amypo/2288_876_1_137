@@ -13,31 +13,32 @@ import com.example.demo.service.PermissionService;
 public class PermissionController {
 
     @Autowired
-    private PermissionService uas;
+    private PermissionService service;
 
     @PostMapping
     public Permission createPermission(@RequestBody Permission permission) {
-        return uas.createPermission(permission);
+        return service.createPermission(permission);
     }
 
     @GetMapping
     public List<Permission> getAllPermissions() {
-        return uas.getAllPermissions();
+        return service.getAllPermissions();
     }
 
     @GetMapping("/{id}")
-    public Permission getPermissionById(@PathVariable long id){
-        return uas.getPermissionById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+    public Permission getPermissionById(@PathVariable Long id) {
+        return service.getPermissionById(id); // ✅ NO orElseThrow
     }
 
     @PutMapping("/{id}")
-    public Permission updatePermission(long id, Permission permission){
-        return uas.updatePermission(id, permission);
+    public Permission updatePermission(
+            @PathVariable Long id,
+            @RequestBody Permission permission) {
+        return service.updatePermission(id, permission);
     }
 
     @PutMapping("/{id}/deactivate")
-    public void deactivatePermission(@PathVariable long id){
-        uas.deactivatePermission(id);
+    public void deactivatePermission(@PathVariable Long id) {
+        service.deactivatePermission(id);
     }
 }
