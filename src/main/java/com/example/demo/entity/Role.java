@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 public class Role {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(unique = true, nullable = false)
@@ -28,4 +27,12 @@ public class Role {
 
     public Boolean getActive() { return active; }
     public void setActive(Boolean active) { this.active = active; }
+    public Role(long id, String roleName, String description, Boolean active) {
+        this.id = id;
+        this.roleName = roleName;
+        this.description = description;
+        this.active = active;
+    }
+    public Role() {
+    }
 }
