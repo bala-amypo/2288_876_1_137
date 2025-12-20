@@ -16,18 +16,18 @@ public class RoleController {
     private RoleService uas;
 
     @PostMapping
-    public UserAccount createRole(@RequestBody Role ua) {
+    public Role createRole(@RequestBody Role ua) {
         return uas.createRole(ua);
     }
 
     @GetMapping
-    public List<UserAccount> getAllUsers() {
-        return uas.getAllUsers();
+    public List<UserAccount> getAllRoles() {
+        return uas.getAllRoles();
     }
 
     @GetMapping("/{id}")
-    public UserAccount getUserById(@PathVariable long id) {
-        return uas.getUserById(id)
+    public UserAccount getRoleById(@PathVariable long id) {
+        return uas.getRoleById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
@@ -37,8 +37,8 @@ public class RoleController {
     }
 
     @PutMapping("/{id}/deactivate")
-    public String deactivateUser(@PathVariable long id) {
-        uas.deactivateUser(id);
+    public String deactivateRole(@PathVariable long id) {
+        uas.deactivateRole(id);
         return "User deactivated successfully";
     }
 }
