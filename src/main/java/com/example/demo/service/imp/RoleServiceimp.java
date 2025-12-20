@@ -44,7 +44,7 @@ public class RoleServiceimp implements RoleService {
         Role role = uar.findById(id)
                 .orElseThrow(() -> new RuntimeException("Role not found"));
 
-        r.setActive(false);
-        uar.save(user);
+        role.setActive(false);
+        uar.save(role);
     }
 }

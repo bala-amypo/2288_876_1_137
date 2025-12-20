@@ -44,7 +44,7 @@ public class PermissionServiceimp implements PermissionService {
         Role permission = uar.findById(id)
                 .orElseThrow(() -> new RuntimeException("Role not found"));
 
-        user.setActive(false);
-        uar.save(user);
+        permission.setActive(false);
+        uar.save(permission);
     }
 }
