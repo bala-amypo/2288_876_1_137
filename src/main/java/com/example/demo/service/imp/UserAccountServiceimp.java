@@ -29,7 +29,7 @@ public class UserAccountServiceimp implements UserAccountService {
     }
 
     @Override
-    public Optional<UserAccount> getUserById(long id) {
+    public UserAccount getUserById(long id) {
         return uar.findById(id);
     }
 

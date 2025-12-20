@@ -15,5 +15,5 @@ public interface RoleService {
 
     Permission updatePermission(Long id, Permission permission);
 
-    void deactivateRole(long id);
+    void deactivatePermission(Long id);
 }

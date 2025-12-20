@@ -27,7 +27,7 @@ public class RoleServiceimp implements RoleService {
     }
 
     @Override
-    public Optional<Role> getRoleById(long id) {
+    public Role getRoleById(long id) {
         return uar.findById(id);
     }
 

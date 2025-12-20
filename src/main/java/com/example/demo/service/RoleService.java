@@ -11,7 +11,7 @@ public interface RoleService {
 
     List<Role> getAllRoles();
 
-    Optional<Role> getRoleById(long id);
+    Role getRoleById(long id);
 
     Role updateRole(long id, Role role);
 

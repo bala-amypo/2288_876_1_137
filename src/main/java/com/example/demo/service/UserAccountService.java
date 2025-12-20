@@ -11,7 +11,7 @@ public interface UserAccountService {
 
     List<UserAccount> getAllUsers();
 
-    Optional<UserAccount> getUserById(long id);
+    UserAccount getUserById(long id);
 
     UserAccount updateUser(long id, UserAccount ua);
 
