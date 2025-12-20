@@ -1,14 +1,39 @@
-package com.example.demo.repository;
+package com.example.demo.controller;
 
 import java.util.List;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.entity.UserRole;
+import com.example.demo.service.UserRoleService;
 
-@Repository
-public interface UserRoleRepository extends JpaRepository<UserRole, Long> {
+@RestController
+@RequestMapping("/api/user-roles")
+public class UserRoleController {
 
-    List<UserRole> findByUser_Id(Long userId);
+    private final UserRoleService service;
+
+    public UserRoleController(UserRoleService service) {
+        this.service = service;
+    }
+
+    @PostMapping
+    public UserRole assignRole(@RequestBody UserRole mapping) {
+        return service.assignRole(mapping);
+    }
+
+    @GetMapping("/user/{userId}")
+    public List<UserRole> getRolesForUser(@PathVariable Long userId) {
+        return service.getRolesForUser(userId);
+    }
+
+    @GetMapping("/{id}")
+    public UserRole getMapping(@PathVariable Long id) {
+        return service.getMappingById(id);
+    }
+
+    @DeleteMapping("/{id}")
+    public void removeRole(@PathVariable Long id) {
+        service.removeRole(id);
+    }
 }
