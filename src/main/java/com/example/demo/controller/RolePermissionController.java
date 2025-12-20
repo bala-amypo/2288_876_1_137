@@ -16,8 +16,8 @@ public class RoleController {
     private RoleService uas;
 
     @PostMapping
-    public UserAccount createUser(@RequestBody Role ua) {
-        return uas.createUser(ua);
+    public UserAccount createRole(@RequestBody Role ua) {
+        return uas.createRole(ua);
     }
 
     @GetMapping
