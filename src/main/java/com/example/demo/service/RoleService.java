@@ -11,9 +11,9 @@ public interface RoleService {
 
     List<Role> getAllRoles();
 
-    Optional<UserAccount> getUserById(long id);
+    Optional<Role> getRoleById(long id);
 
-    UserAccount updateUser(long id, UserAccount ua);
+    Role updateRole(long id, Role role);
 
-    void deactivateUser(long id);
+    void deactivateRole(long id);
 }
