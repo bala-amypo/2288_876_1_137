@@ -27,13 +27,13 @@ public class PermissionController {
 
     @GetMapping("/{id}")
     public Permission getPermissionById(@PathVariable long id){
-        return uas.getUserById(id)
+        return uas.getPermissionById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
     @PutMapping("/{id}")
-    public UserAccount updateUser(@PathVariable long id, @RequestBody UserAccount ua) {
-        return uas.updateUser(id, ua);
+    public Permission updatePermission(long id, Permission permission){
+        return uas.updateUser(id, perm);
     }
 
     @PutMapping("/{id}/deactivate")
