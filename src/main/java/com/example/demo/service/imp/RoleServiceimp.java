@@ -17,25 +17,25 @@ public class UserAccountServiceimp implements UserAccountService {
     private RoleRepository uar;
 
     @Override
-    public UserAccount createUser(UserAccount ua) {
-        ua.setCreatedAt(LocalDateTime.now());
-        ua.setUpdatedAt(LocalDateTime.now());
-        return uar.save(ua);
+    public Role createRole(Role role) {
+        role.setCreatedAt(LocalDateTime.now());
+        role.setUpdatedAt(LocalDateTime.now());
+        return uar.save(role);
     }
 
     @Override
-    public List<UserAccount> getAllUsers() {
+    public List<Role> getAllRoles() {
         return uar.findAll();
     }
 
     @Override
-    public Optional<UserAccount> getUserById(long id) {
+    public Optional<Role> getRoleById(long id) {
         return uar.findById(id);
     }
 
     @Override
-    public UserAccount updateUser(long id, UserAccount ua) {
-        UserAccount existing = uar.findById(id)
+    public Role updateRole(long id, Role role) {
+        Role existing = uar.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         existing.setFullname(ua.getFullname());
