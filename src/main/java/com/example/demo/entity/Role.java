@@ -10,4 +10,7 @@ import jakarta.persistence.Id;
 public class Role{
     @Id
     private long id;
+    @column(unique=true)
+    private String rolename;
+    private 
 }
