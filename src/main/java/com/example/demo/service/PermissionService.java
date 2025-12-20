@@ -11,9 +11,9 @@ public interface RoleService {
 
     List<Permission> getAllPermissions();
 
-    Optional<Role> getRoleById(long id);
+    Permission getPermissionById(Long id);
 
-    Role updateRole(long id, Role role);
+    Permission updatePermission(Long id, Permission permission);
 
     void deactivateRole(long id);
 }
