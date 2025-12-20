@@ -7,18 +7,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Permission;
-import com.example.demo.repository.RoleRepository;
-import com.example.demo.service.RoleService;
+import com.example.demo.repository.PermissionRepository;
+import com.example.demo.service.PermissionService;
 
 @Service
-public class RoleServiceimp implements RoleService {
+public class PermissionServiceimp implements PermissionService {
 
     @Autowired
-    private RoleRepository uar;
+    private PermissionRepository uar;
 
     @Override
-    public Role createRole(Role role) {
-        return uar.save(role);
+    public Permission createPermission(Permission permission){
+        return uar.save(permission);
     }
 
     @Override
