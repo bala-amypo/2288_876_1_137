@@ -1,66 +1,64 @@
 package com.example.demo.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.dto.AuthRequestDto;
-import com.example.demo.dto.AuthResponseDto;
-import com.example.demo.dto.RegisterRequestDto;
 import com.example.demo.entity.UserAccount;
 import com.example.demo.repository.UserAccountRepository;
 import com.example.demo.security.JwtUtil;
 import com.example.demo.service.AuthService;
+import com.example.demo.web.dto.AuthRequestDto;
+import com.example.demo.web.dto.AuthResponseDto;
+import com.example.demo.web.dto.RegisterRequestDto;
 
 @Service
 public class AuthServiceImpl implements AuthService {
 
-    @Autowired
-    private UserAccountRepository userRepo;
+    private final UserAccountRepository userAccountRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private JwtUtil jwtUtil;
-
-    @Override
-    public void register(RegisterRequestDto dto) {
-        UserAccount user = new UserAccount();
-        user.setEmail(dto.getEmail());
-        user.setFullName(dto.getFullName());
-        user.setPassword(passwordEncoder.encode(dto.getPassword()));
-        user.setActive(true);
-
-        userRepo.save(user);
+    public AuthServiceImpl(
+            UserAccountRepository userAccountRepository,
+            PasswordEncoder passwordEncoder,
+            JwtUtil jwtUtil) {
+        this.userAccountRepository = userAccountRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtUtil = jwtUtil;
     }
 
     @Override
-    public AuthResponseDto login(AuthRequestDto dto) {
+    public void register(RegisterRequestDto request) {
 
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        dto.getEmail(),
-                        dto.getPassword()
-                )
-        );
+        UserAccount user = new UserAccount();
+        user.setEmail(request.getEmail());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setFullname(request.getFullName());
+        user.setActive(true);
+        user.setCreatedAt(LocalDateTime.now());
+        user.setUpdatedAt(LocalDateTime.now());
 
-        // SAAS-compliant token generation
+        userAccountRepository.save(user);
+    }
+
+    @Override
+    public AuthResponseDto login(AuthRequestDto request) {
+
+        UserAccount user = userAccountRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new RuntimeException("Invalid email or password"));
+
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            throw new RuntimeException("Invalid email or password");
+        }
+
         Map<String, Object> claims = new HashMap<>();
+        claims.put("userId", user.getId());
 
-        String token = jwtUtil.generateToken(
-                claims,
-                dto.getEmail()
-        );
+        String token = jwtUtil.generateToken(claims, user.getEmail());
 
         return new AuthResponseDto(token);
     }
