@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.service.AuthService;
 import com.example.demo.web.dto.AuthRequestDto;
+import com.example.demo.web.dto.AuthResponseDto;
 import com.example.demo.web.dto.RegisterRequestDto;
 
 @RestController
@@ -17,13 +18,12 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String register(@RequestBody RegisterRequestDto request) {
+    public void register(@RequestBody RegisterRequestDto request) {
         authService.register(request);
-        return "User registered successfully";
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody AuthRequestDto request) {
+    public AuthResponseDto login(@RequestBody AuthRequestDto request) {
         return authService.login(request);
     }
 }

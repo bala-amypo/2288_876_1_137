@@ -1,17 +1,17 @@
 package com.example.demo.service.impl;
 
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.dto.AuthRequestDto;
-import com.example.demo.dto.AuthResponseDto;
-import com.example.demo.dto.RegisterRequestDto;
 import com.example.demo.entity.UserAccount;
-import com.example.demo.exception.BadRequestException;
 import com.example.demo.repository.UserAccountRepository;
 import com.example.demo.security.JwtUtil;
 import com.example.demo.service.AuthService;
+import com.example.demo.web.dto.AuthRequestDto;
+import com.example.demo.web.dto.AuthResponseDto;
+import com.example.demo.web.dto.RegisterRequestDto;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -21,7 +21,7 @@ public class AuthServiceImpl implements AuthService {
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
 
-    // ✅ SAAS REQUIRED CONSTRUCTOR (ORDER MATTERS)
+    // ✅ EXACT SAAS CONSTRUCTOR
     public AuthServiceImpl(
             UserAccountRepository userAccountRepository,
             PasswordEncoder passwordEncoder,
@@ -38,7 +38,7 @@ public class AuthServiceImpl implements AuthService {
     public void register(RegisterRequestDto request) {
 
         if (userAccountRepository.existsByEmail(request.getEmail())) {
-            throw new BadRequestException("Email already exists");
+            throw new RuntimeException("Email already exists");
         }
 
         UserAccount user = new UserAccount();
@@ -53,14 +53,18 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public AuthResponseDto login(AuthRequestDto request) {
 
-        UserAccount user = userAccountRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new BadRequestException("Invalid credentials"));
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.getEmail(),
+                        request.getPassword()
+                )
+        );
 
-        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new BadRequestException("Invalid credentials");
-        }
+        UserAccount user = userAccountRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
         String token = jwtUtil.generateToken(null, user.getEmail());
+
         return new AuthResponseDto(token);
     }
 }
