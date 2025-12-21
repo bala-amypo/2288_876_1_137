@@ -1,12 +1,12 @@
 package com.example.demo.service.impl;
 
 import java.time.Instant;
-import java.util.HashMap;
-import java.util.Map;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.HashMap;
+import java.util.Map;
 
-
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -23,19 +23,20 @@ public class AuthServiceImpl implements AuthService {
 
     private final UserAccountRepository userAccountRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager; // REQUIRED
     private final JwtUtil jwtUtil;
 
     public AuthServiceImpl(
             UserAccountRepository userAccountRepository,
             PasswordEncoder passwordEncoder,
+            AuthenticationManager authenticationManager,
             JwtUtil jwtUtil) {
+
         this.userAccountRepository = userAccountRepository;
         this.passwordEncoder = passwordEncoder;
+        this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
     }
-
-    
-
 
     @Override
     public void register(RegisterRequestDto request) {
