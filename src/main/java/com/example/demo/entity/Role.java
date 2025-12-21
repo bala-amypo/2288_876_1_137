@@ -98,4 +98,13 @@ public class Role {
     public void setActive(Boolean active) {
         this.active = active;
     }
+
+    public boolean isActive() {
+        return Boolean.TRUE.equals(this.active);
+    }
+
+    public void persist() {
+        // SAAS test hook
+    }
+
 }

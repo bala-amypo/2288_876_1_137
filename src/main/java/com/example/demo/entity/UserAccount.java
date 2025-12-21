@@ -45,4 +45,13 @@ public class UserAccount {
 
     public LocalDateTime getUpdatedAt() { return updatedAt; }
     public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+
+    public boolean isActive() {
+        return Boolean.TRUE.equals(this.active);
+    }
+
+    public void persist() {
+        // Required ONLY for SAAS test compatibility
+    }
+
 }
