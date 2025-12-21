@@ -21,7 +21,7 @@ public class AuthServiceImpl implements AuthService {
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
 
-    // ✅ EXACT SAAS CONSTRUCTOR
+    // ✅ SAAS-required constructor
     public AuthServiceImpl(
             UserAccountRepository userAccountRepository,
             PasswordEncoder passwordEncoder,
@@ -63,7 +63,8 @@ public class AuthServiceImpl implements AuthService {
         UserAccount user = userAccountRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        String token = jwtUtil.generateToken(null, user.getEmail());
+        // ✅ FIX: SAAS JwtUtil takes ONLY username
+        String token = jwtUtil.generateToken(user.getEmail());
 
         return new AuthResponseDto(token);
     }
