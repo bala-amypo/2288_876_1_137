@@ -78,7 +78,6 @@ public class UserRole {
     public void setAssignedAt(LocalDateTime assignedAt) {
         this.assignedAt = assignedAt;
     }
-    import java.time.LocalDateTime;
 
     public void prePersist() {
         this.assignedAt = LocalDateTime.now();

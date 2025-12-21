@@ -77,4 +77,13 @@ public class RolePermission {
     public void setGrantedAt(LocalDateTime grantedAt) {
         this.grantedAt = grantedAt;
     }
+
+    public void prePersist() {
+        this.grantedAt = LocalDateTime.now();
+    }
+
+    public void preUpdate() {
+        // this.updatedAt = LocalDateTime.now();
+    }
+
 }
