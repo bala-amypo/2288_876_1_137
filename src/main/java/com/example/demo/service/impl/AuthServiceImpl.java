@@ -1,8 +1,6 @@
 package com.example.demo.service.impl;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,7 +21,7 @@ public class AuthServiceImpl implements AuthService {
 
     private final UserAccountRepository userAccountRepository;
     private final PasswordEncoder passwordEncoder;
-    private final AuthenticationManager authenticationManager; // REQUIRED
+    private final AuthenticationManager authenticationManager; // REQUIRED BY SAAS
     private final JwtUtil jwtUtil;
 
     public AuthServiceImpl(
@@ -47,8 +45,9 @@ public class AuthServiceImpl implements AuthService {
         user.setFullName(request.getFullName());
         user.setActive(true);
 
-        user.setCreatedAt(LocalDateTime.ofInstant(Instant.now(), ZoneOffset.UTC));
-        user.setUpdatedAt(LocalDateTime.ofInstant(Instant.now(), ZoneOffset.UTC));
+        // ✅ SAAS EXPECTS Instant (NOT LocalDateTime)
+        user.setCreatedAt(Instant.now());
+        user.setUpdatedAt(Instant.now());
 
         userAccountRepository.save(user);
     }
