@@ -1,14 +1,14 @@
-package com.example.demo.repository;
+// package com.example.demo.repository;
 
-import java.util.List;
+// import java.util.List;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+// import org.springframework.data.jpa.repository.JpaRepository;
+// import org.springframework.stereotype.Repository;
 
-import com.example.demo.entity.RolePermission;
+// import com.example.demo.entity.RolePermission;
 
-@Repository
-public interface RolePermissionRepository extends JpaRepository<RolePermission, Long> {
+// @Repository
+// public interface RolePermissionRepository extends JpaRepository<RolePermission, Long> {
 
-    List<RolePermission> findByRole_Id(Long roleId);
-}
+//     List<RolePermission> findByRole_Id(Long roleId);
+// }
