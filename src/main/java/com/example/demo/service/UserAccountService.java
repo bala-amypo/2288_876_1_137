@@ -35,4 +35,3 @@ public interface UserAccountService {
 
     void deactivateUser(long id);
 }
-

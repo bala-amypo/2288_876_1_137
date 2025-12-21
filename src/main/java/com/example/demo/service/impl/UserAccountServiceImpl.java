@@ -18,7 +18,18 @@ public class UserAccountServiceImpl implements UserAccountService {
         this.userAccountRepository = userAccountRepository;
     }
 
-    // ✅ EXACT signature match (long)
+    @Override
+    public UserAccount createUser(UserAccount user) {
+        return userAccountRepository.save(user);
+    }
+
+    @Override
+    public UserAccount updateUser(long id, UserAccount user) {
+        UserAccount existing = getUserById(id);
+        existing.setActive(user.getActive());
+        return userAccountRepository.save(existing);
+    }
+
     @Override
     public UserAccount getUserById(long id) {
         return userAccountRepository.findById(id)
@@ -30,7 +41,6 @@ public class UserAccountServiceImpl implements UserAccountService {
         return userAccountRepository.findAll();
     }
 
-    // ✅ EXACT signature match (long)
     @Override
     public void deactivateUser(long id) {
         UserAccount user = getUserById(id);
