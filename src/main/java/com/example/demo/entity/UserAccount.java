@@ -15,7 +15,7 @@ public class UserAccount {
 
     private String fullName;
 
-    // private String password;
+    private String password;
 
     private Boolean active = true;
 
@@ -90,7 +90,7 @@ public class UserAccount {
 
    
     public void persist() {
-    
+        // no-op
     }
 
     @PrePersist
