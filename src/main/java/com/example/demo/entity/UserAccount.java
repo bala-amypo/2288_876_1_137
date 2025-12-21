@@ -53,5 +53,17 @@ public class UserAccount {
     public void persist() {
         // Required ONLY for SAAS test compatibility
     }
+    import java.time.LocalDateTime;
+
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+        this.active = true;
+    }
+
+    public void preUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
+
 
 }
