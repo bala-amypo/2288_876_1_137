@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import com.example.demo.entity.Role;
 import com.example.demo.entity.UserAccount;
 import com.example.demo.entity.UserRole;
+import com.example.demo.exception.BadRequestException;
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserAccountRepository;
 import com.example.demo.repository.UserRoleRepository;
@@ -19,7 +21,7 @@ public class UserRoleServiceImpl implements UserRoleService {
     private final UserAccountRepository userAccountRepository;
     private final RoleRepository roleRepository;
 
-    // ✅ CORRECT constructor name
+    // ✅ SAAS REQUIRED CONSTRUCTOR (ORDER MATTERS)
     public UserRoleServiceImpl(
             UserRoleRepository userRoleRepository,
             UserAccountRepository userAccountRepository,
@@ -34,17 +36,17 @@ public class UserRoleServiceImpl implements UserRoleService {
     public UserRole assignRole(UserRole mapping) {
 
         UserAccount user = userAccountRepository.findById(mapping.getUser().getId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new BadRequestException("User not found"));
 
         if (!Boolean.TRUE.equals(user.getActive())) {
-            throw new RuntimeException("User is inactive");
+            throw new BadRequestException("User is inactive");
         }
 
         Role role = roleRepository.findById(mapping.getRole().getId())
-                .orElseThrow(() -> new RuntimeException("Role not found"));
+                .orElseThrow(() -> new BadRequestException("Role not found"));
 
         if (!Boolean.TRUE.equals(role.getActive())) {
-            throw new RuntimeException("Role is inactive");
+            throw new BadRequestException("Role is inactive");
         }
 
         mapping.setUser(user);
@@ -61,7 +63,7 @@ public class UserRoleServiceImpl implements UserRoleService {
     @Override
     public UserRole getMappingById(Long id) {
         return userRoleRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("UserRole mapping not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("UserRole mapping not found"));
     }
 
     @Override
