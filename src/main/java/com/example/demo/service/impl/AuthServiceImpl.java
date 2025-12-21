@@ -3,6 +3,9 @@ package com.example.demo.service.impl;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -31,6 +34,9 @@ public class AuthServiceImpl implements AuthService {
         this.jwtUtil = jwtUtil;
     }
 
+    
+
+
     @Override
     public void register(RegisterRequestDto request) {
 
@@ -40,9 +46,8 @@ public class AuthServiceImpl implements AuthService {
         user.setFullName(request.getFullName());
         user.setActive(true);
 
-        // ✅ SAAS requires Instant
-        user.setCreatedAt(Instant.now());
-        user.setUpdatedAt(Instant.now());
+        user.setCreatedAt(LocalDateTime.ofInstant(Instant.now(), ZoneOffset.UTC));
+        user.setUpdatedAt(LocalDateTime.ofInstant(Instant.now(), ZoneOffset.UTC));
 
         userAccountRepository.save(user);
     }
