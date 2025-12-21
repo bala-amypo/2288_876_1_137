@@ -2,49 +2,52 @@ package com.example.demo.entity;
 
 import java.time.LocalDateTime;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "user_accounts")
 public class UserAccount {
 
     @Id
-    private long id;
-
-    @Column(nullable = false, unique = true)
-    private String email;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String fullname;
+
+    @Column(unique = true, nullable = false)
+    private String email;
+
+    @Column(nullable = false)
+    private String password;   // ✅ REQUIRED FOR AUTH
 
     private Boolean active = true;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public UserAccount() {
-    }
+    // ✅ Default constructor
+    public UserAccount() {}
 
-    public UserAccount(Long id, String email, String fullname, Boolean active,
-                       LocalDateTime createdAt, LocalDateTime updatedAt) {
+    // ✅ Parameterized constructor
+    public UserAccount(Long id, String fullname, String email, String password, Boolean active) {
         this.id = id;
-        this.email = email;
         this.fullname = fullname;
+        this.email = email;
+        this.password = password;
         this.active = active;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 
-    // Getters and Setters
-
+    // ✅ Getters & Setters
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     public String getEmail() {
@@ -55,12 +58,13 @@ public class UserAccount {
         this.email = email;
     }
 
-    public String getFullname() {
-        return fullname;
+    // 🔐 PASSWORD
+    public String getPassword() {
+        return password;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Boolean getActive() {

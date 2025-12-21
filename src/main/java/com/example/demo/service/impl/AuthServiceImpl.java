@@ -35,7 +35,7 @@ public class AuthServiceImpl implements AuthService {
         user.setFullname(request.getFullName());
         user.setActive(true);
 
-        // Password encoded (SAAS RULE)
+        // ✅ ENCODE PASSWORD (SAAS RULE)
         user.setPassword(passwordEncoder.encode(request.getPassword()));
 
         userAccountRepository.save(user);
