@@ -50,22 +50,19 @@ package com.example.demo.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import java.security.Key;
 import java.util.Date;
 import java.util.Map;
 
 @Component
 public class JwtUtil {
 
-    // ✅ SAAS fixed secret (minimum 256-bit)
-    private static final Key SECRET_KEY =
-            Keys.hmacShaKeyFor("saas-demo-secret-key-which-is-very-secure-12345"
-                    .getBytes());
+    // ✅ SAAS-compatible secret
+    private static final String SECRET_KEY =
+            "saas-demo-secret-key-which-is-secure";
 
     private static final long EXPIRATION_TIME = 1000 * 60 * 60; // 1 hour
 
@@ -77,16 +74,16 @@ public class JwtUtil {
                 .setSubject(subject)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(SECRET_KEY, SignatureAlgorithm.HS256)
+                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
                 .compact();
     }
 
-    // ✅ REQUIRED BY JwtAuthFilter
+    // ✅ USED BY JwtAuthFilter
     public String extractUsername(String token) {
-        return extractAllClaims(token).getSubject();
+        return getAllClaims(token).getSubject();
     }
 
-    // ✅ REQUIRED BY JwtAuthFilter
+    // ✅ USED BY JwtAuthFilter
     public boolean validateToken(String token, UserDetails userDetails) {
 
         final String username = extractUsername(token);
@@ -95,14 +92,13 @@ public class JwtUtil {
 
     // 🔐 INTERNAL HELPERS
     private boolean isTokenExpired(String token) {
-        return extractAllClaims(token).getExpiration().before(new Date());
+        return getAllClaims(token).getExpiration().before(new Date());
     }
 
-    private Claims extractAllClaims(String token) {
+    private Claims getAllClaims(String token) {
 
-        return Jwts.parserBuilder()
+        return Jwts.parser()
                 .setSigningKey(SECRET_KEY)
-                .build()
                 .parseClaimsJws(token)
                 .getBody();
     }
