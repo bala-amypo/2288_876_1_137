@@ -13,13 +13,14 @@ public class UserAccountServiceImpl implements UserAccountService {
 
     private final UserAccountRepository userAccountRepository;
 
-    // ✅ SAAS constructor injection
+    // ✅ Constructor injection (SAAS rule)
     public UserAccountServiceImpl(UserAccountRepository userAccountRepository) {
         this.userAccountRepository = userAccountRepository;
     }
 
+    // ✅ EXACT signature match (long)
     @Override
-    public UserAccount getUserById(Long id) {
+    public UserAccount getUserById(long id) {
         return userAccountRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
@@ -29,8 +30,9 @@ public class UserAccountServiceImpl implements UserAccountService {
         return userAccountRepository.findAll();
     }
 
+    // ✅ EXACT signature match (long)
     @Override
-    public void deactivateUser(Long id) {
+    public void deactivateUser(long id) {
         UserAccount user = getUserById(id);
         user.setActive(false);
         userAccountRepository.save(user);
