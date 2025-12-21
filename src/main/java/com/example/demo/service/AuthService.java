@@ -1,12 +1,12 @@
-// package com.example.demo.service;
+package com.example.demo.service;
 
-// import com.example.demo.web.dto.AuthRequestDto;
-// import com.example.demo.web.dto.AuthResponseDto;
-// import com.example.demo.web.dto.RegisterRequestDto;
+import com.example.demo.web.dto.AuthRequestDto;
+import com.example.demo.web.dto.AuthResponseDto;
+import com.example.demo.web.dto.RegisterRequestDto;
 
-// public interface AuthService {
+public interface AuthService {
 
-//     void register(RegisterRequestDto request);
+    void register(RegisterRequestDto request);
 
-//     AuthResponseDto login(AuthRequestDto request);
-// }
+    AuthResponseDto login(AuthRequestDto request);
+}
