@@ -1,20 +1,20 @@
-package com.example.demo.dto;
+// package com.example.demo.dto;
 
-public class AuthResponseDto {
+// public class AuthResponseDto {
 
-    private String token;
+//     private String token;
 
-    public AuthResponseDto() {}
+//     public AuthResponseDto() {}
 
-    public AuthResponseDto(String token) {
-        this.token = token;
-    }
+//     public AuthResponseDto(String token) {
+//         this.token = token;
+//     }
 
-    public String getToken() {
-        return token;
-    }
+//     public String getToken() {
+//         return token;
+//     }
 
-    public void setToken(String token) {
-        this.token = token;
-    }
-}
+//     public void setToken(String token) {
+//         this.token = token;
+//     }
+// }
