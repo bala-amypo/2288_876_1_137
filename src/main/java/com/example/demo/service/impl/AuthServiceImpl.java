@@ -1,6 +1,6 @@
 package com.example.demo.service.impl;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,8 +39,10 @@ public class AuthServiceImpl implements AuthService {
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setFullName(request.getFullName());
         user.setActive(true);
-        user.setCreatedAt(LocalDateTime.now());
-        user.setUpdatedAt(LocalDateTime.now());
+
+        // ✅ SAAS requires Instant
+        user.setCreatedAt(Instant.now());
+        user.setUpdatedAt(Instant.now());
 
         userAccountRepository.save(user);
     }
