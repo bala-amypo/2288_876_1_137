@@ -1,4 +1,4 @@
-package com.example.demo.web.dto;
+package com.example.demo.dto;
 
 public class AuthResponseDto {
 
@@ -12,5 +12,9 @@ public class AuthResponseDto {
 
     public String getToken() {
         return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }
