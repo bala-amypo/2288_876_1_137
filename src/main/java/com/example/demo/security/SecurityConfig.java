@@ -13,28 +13,33 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
+            // ❌ Disable CSRF
             .csrf(csrf -> csrf.disable())
+
+            // ❌ Disable DEFAULT LOGIN PAGE
+            .formLogin(form -> form.disable())
+            .httpBasic(basic -> basic.disable())
+
+            // ✅ AUTH RULES (SAAS)
             .authorizeHttpRequests(auth -> auth
 
-                // ✅ PUBLIC ENDPOINTS (REQUIRED BY SAAS)
+                // 🔓 PUBLIC
                 .requestMatchers(
-                    "/auth/**",
-                    "/swagger-ui/**",
-                    "/v3/api-docs/**",
-                    "/swagger-ui.html"
+                        "/auth/**",
+                        "/swagger-ui/**",
+                        "/swagger-ui.html",
+                        "/v3/api-docs/**"
                 ).permitAll()
 
-                // 🔒 JWT PROTECTED
+                // 🔐 PROTECTED
                 .requestMatchers("/api/**").authenticated()
 
-                // everything else
+                // allow others (health, root)
                 .anyRequest().permitAll()
-            )
-            .formLogin(form -> form.disable())   // ❌ disable default login page
-            .httpBasic(basic -> basic.disable()); // ❌ disable basic auth
+            );
 
         return http.build();
     }
