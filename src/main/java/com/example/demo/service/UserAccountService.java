@@ -24,9 +24,15 @@ import com.example.demo.entity.UserAccount;
 
 public interface UserAccountService {
 
+    // ✅ REQUIRED by controller
+    UserAccount createUser(UserAccount user);
+
+    UserAccount updateUser(long id, UserAccount user);
+
     UserAccount getUserById(long id);
 
     List<UserAccount> getAllUsers();
 
     void deactivateUser(long id);
 }
+
