@@ -28,11 +28,9 @@ public class UserRole {
 
     private LocalDateTime assignedAt;
 
-    // ✅ Default Constructor
     public UserRole() {
     }
 
-    // ✅ Parameterized Constructor
     public UserRole(Long id, UserAccount user, Role role, LocalDateTime assignedAt) {
         this.id = id;
         this.user = user;

@@ -15,7 +15,7 @@ public class UserAccount {
 
     private String fullName;
 
-    private String password;
+    // private String password;
 
     private Boolean active = true;
 
@@ -43,7 +43,6 @@ public class UserAccount {
         this.email = email;
     }
 
-    // ✅ REQUIRED BY SAAS SERVICES
     public String getFullName() {
         return fullName;
     }
@@ -84,14 +83,14 @@ public class UserAccount {
         this.updatedAt = updatedAt;
     }
 
-    // ✅ REQUIRED BY SAAS TESTS
+    
     public boolean isActive() {
         return Boolean.TRUE.equals(this.active);
     }
 
-    // ✅ REQUIRED ONLY FOR SAAS TEST COMPATIBILITY
+   
     public void persist() {
-        // no-op
+    
     }
 
     @PrePersist
