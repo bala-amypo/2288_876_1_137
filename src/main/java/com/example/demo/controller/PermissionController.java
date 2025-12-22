@@ -88,7 +88,7 @@ public class PermissionController {
 
 //     @GetMapping("/{id}")
 //     public Permission getPermissionById(@PathVariable Long id) {
-//         return service.getPermissionById(id); // ✅ NO orElseThrow
+//         return service.getPermissionById(id); 
 //     }
 
 //     @PutMapping("/{id}")
