@@ -67,7 +67,7 @@ public class RoleServiceImpl implements RoleService {
 
 //     private final RoleRepository roleRepository;
 
-//     // ✅ REQUIRED CONSTRUCTOR (SAAS RULE)
+//     
 //     public RoleServiceImpl(RoleRepository roleRepository) {
 //         this.roleRepository = roleRepository;
 //     }

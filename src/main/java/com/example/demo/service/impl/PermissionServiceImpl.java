@@ -67,7 +67,7 @@ public class PermissionServiceImpl implements PermissionService {
 
 //     private final PermissionRepository permissionRepository;
 
-//     // ✅ Constructor Injection (SAAS rule)
+//     
 //     public PermissionServiceImpl(PermissionRepository permissionRepository) {
 //         this.permissionRepository = permissionRepository;
 //     }
