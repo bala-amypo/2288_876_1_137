@@ -71,11 +71,11 @@ public class RolePermission {
 
 //     private LocalDateTime grantedAt;
 
-//     // ✅ Default Constructor
+//    
 //     public RolePermission() {
 //     }
 
-//     // ✅ Parameterized Constructor
+//     
 //     public RolePermission(Long id, Role role, Permission permission, LocalDateTime grantedAt) {
 //         this.id = id;
 //         this.role = role;
