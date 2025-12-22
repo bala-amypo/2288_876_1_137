@@ -74,7 +74,7 @@
 // //                 ).permitAll()
 // //                 .anyRequest().authenticated()
 // //             )
-// //             // ❌ DO NOT ADD formLogin or httpBasic
+// //             
 // //             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
 // //         return http.build();
