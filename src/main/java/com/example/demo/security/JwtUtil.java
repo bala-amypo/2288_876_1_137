@@ -2,7 +2,6 @@ package com.example.demo.security;
 
 import java.util.Date;
 import java.util.Map;
-import java.util.function.Function;
 
 import org.springframework.stereotype.Component;
 
@@ -13,65 +12,51 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Component
 public class JwtUtil {
 
-    // 🔐 SAAS secret key
-    private static final String SECRET_KEY =
-            "saas-secret-key-saas-secret-key-saas-secret-key";
+    // 🔐 SAAS REQUIRED CONSTANTS
+    private static final String SECRET_KEY = "saas-secret-key";
+    private static final long EXPIRATION_TIME = 1000 * 60 * 60; // 1 hour
 
-    private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 24; // 24 hours
+    // ✅ REQUIRED NO-ARG CONSTRUCTOR (SAAS)
+    public JwtUtil() {}
 
-    // ===============================
-    // ✅ TOKEN GENERATION (SAAS)
-    // ===============================
-    public String generateToken(Map<String, Object> claims, String username) {
+    // ✅ REQUIRED BY AuthServiceImpl
+    public String generateToken(Map<String, Object> claims, String subject) {
         return Jwts.builder()
                 .setClaims(claims)
-                .setSubject(username)
+                .setSubject(subject)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
                 .compact();
     }
 
-    // Optional overload
-    public String generateToken(String username) {
-        return generateToken(Map.of(), username);
-    }
-
-    // ===============================
-    // ✅ EXTRACT USERNAME
-    // ===============================
+    // ✅ REQUIRED BY JwtAuthFilter
     public String getUsername(String token) {
-        return extractClaim(token, Claims::getSubject);
+        return getClaims(token).getSubject();
     }
 
-    // ===============================
-    // ✅ TOKEN VALIDATION
-    // ===============================
+    // ✅ REQUIRED BY JwtAuthFilter
     public boolean isTokenValid(String token, String username) {
-        final String extractedUsername = getUsername(token);
-        return extractedUsername.equals(username) && !isTokenExpired(token);
+        return username.equals(getUsername(token)) && !isTokenExpired(token);
     }
 
-    // ===============================
-    // INTERNAL HELPERS
-    // ===============================
-    private boolean isTokenExpired(String token) {
-        return extractExpiration(token).before(new Date());
+    // ✅ REQUIRED BY SAAS TESTS
+    public long getExpirationMillis() {
+        return EXPIRATION_TIME;
     }
 
-    private Date extractExpiration(String token) {
-        return extractClaim(token, Claims::getExpiration);
-    }
+    // ================= INTERNAL HELPERS =================
 
-    private <T> T extractClaim(String token, Function<Claims, T> resolver) {
-        final Claims claims = extractAllClaims(token);
-        return resolver.apply(claims);
-    }
-
-    private Claims extractAllClaims(String token) {
+    private Claims getClaims(String token) {
         return Jwts.parser()
                 .setSigningKey(SECRET_KEY)
                 .parseClaimsJws(token)
                 .getBody();
+    }
+
+    private boolean isTokenExpired(String token) {
+        return getClaims(token)
+                .getExpiration()
+                .before(new Date());
     }
 }
