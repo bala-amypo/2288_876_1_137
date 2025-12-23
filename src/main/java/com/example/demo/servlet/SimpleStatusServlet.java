@@ -1,25 +1,17 @@
 package com.example.demo.servlet;
 
+import jakarta.servlet.http.*;
+import jakarta.servlet.annotation.WebServlet;
 import java.io.IOException;
 
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
+@WebServlet("/status")
 public class SimpleStatusServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    public void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
 
-        response.setContentType("application/json");
-        response.setStatus(HttpServletResponse.SC_OK);
-
-        response.getWriter().write("""
-            {
-              "status": "UP",
-              "service": "SAAS Demo Application"
-            }
-        """);
+        resp.setContentType("application/json");
+        resp.getWriter().write("{\"status\":\"UP\"}");
     }
 }

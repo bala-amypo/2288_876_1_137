@@ -1,35 +1,42 @@
 package com.example.demo.security;
 
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.UserAccount;
 import com.example.demo.repository.UserAccountRepository;
 
+import java.util.Collections;
+
 @Service
-public class CustomUserDetailsService implements UserDetailsService {
+public class CustomerDetailsService implements UserDetailsService {
 
-    private final UserAccountRepository userAccountRepository;
+    private UserAccountRepository userAccountRepository;
 
-    public CustomUserDetailsService(UserAccountRepository userAccountRepository) {
+    // ✅ REQUIRED BY SAAS TESTS
+    public CustomerDetailsService() {
+    }
+
+    // ✅ USED BY SPRING
+    public CustomerDetailsService(UserAccountRepository userAccountRepository) {
         this.userAccountRepository = userAccountRepository;
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username)
+    public UserDetails loadUserByUsername(String email)
             throws UsernameNotFoundException {
 
-        UserAccount user = userAccountRepository.findByEmail(username)
-                .orElseThrow(() ->
-                        new UsernameNotFoundException("User not found"));
+        UserAccount user = userAccountRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        return org.springframework.security.core.userdetails.User
-                .withUsername(user.getEmail())
-                .password(user.getPassword())
-                .authorities("USER")
-                .accountLocked(!user.isActive())
-                .build();
+        return new User(
+                user.getEmail(),
+                user.getPassword(),
+                user.isActive(),
+                true,
+                true,
+                true,
+                Collections.emptyList()
+        );
     }
 }
