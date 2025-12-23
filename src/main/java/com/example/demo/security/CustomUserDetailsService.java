@@ -9,15 +9,14 @@ import com.example.demo.repository.UserAccountRepository;
 import java.util.Collections;
 
 @Service
-public class CustomerDetailsService implements UserDetailsService {
+public class CustomUserDetailsService implements UserDetailsService {
 
     private UserAccountRepository userAccountRepository;
 
-    // ✅ REQUIRED BY SAAS TESTS
-    public CustomerDetailsService() {
-    }
+    // REQUIRED BY SAAS (no-arg)
+    public CustomerDetailsService() {}
 
-    // ✅ USED BY SPRING
+    // Used by Spring
     public CustomerDetailsService(UserAccountRepository userAccountRepository) {
         this.userAccountRepository = userAccountRepository;
     }
