@@ -14,10 +14,10 @@ public class CustomUserDetailsService implements UserDetailsService {
     private UserAccountRepository userAccountRepository;
 
     // REQUIRED BY SAAS (no-arg)
-    public CustomerDetailsService() {}
+    public CustomUserDetailsService() {}
 
     // Used by Spring
-    public CustomerDetailsService(UserAccountRepository userAccountRepository) {
+    public CustomUserDetailsService(UserAccountRepository userAccountRepository) {
         this.userAccountRepository = userAccountRepository;
     }
 
