@@ -83,10 +83,10 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    public UserAccount getUserById(long id) {
+    public UserAccount getUserById(long id){ 
         return userAccountRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-    }
+            }
 
     @Override
     public List<UserAccount> getAllUsers() {
