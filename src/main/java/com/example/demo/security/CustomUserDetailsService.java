@@ -1,22 +1,22 @@
 package com.example.demo.security;
 
-import org.springframework.security.core.userdetails.*;
+import java.util.Collections;
+
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.UserAccount;
 import com.example.demo.repository.UserAccountRepository;
 
-import java.util.Collections;
-
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private UserAccountRepository userAccountRepository;
+    private final UserAccountRepository userAccountRepository;
 
-    // REQUIRED BY SAAS (no-arg)
-    public CustomUserDetailsService() {}
-
-    // Used by Spring
+    // ✅ REQUIRED by Spring / SAAS
     public CustomUserDetailsService(UserAccountRepository userAccountRepository) {
         this.userAccountRepository = userAccountRepository;
     }
@@ -26,15 +26,16 @@ public class CustomUserDetailsService implements UserDetailsService {
             throws UsernameNotFoundException {
 
         UserAccount user = userAccountRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                .orElseThrow(() ->
+                        new UsernameNotFoundException("User not found: " + email));
 
         return new User(
                 user.getEmail(),
                 user.getPassword(),
-                user.isActive(),
-                true,
-                true,
-                true,
+                user.isActive(),   // enabled
+                true,              // accountNonExpired
+                true,              // credentialsNonExpired
+                true,              // accountNonLocked
                 Collections.emptyList()
         );
     }
