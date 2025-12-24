@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class SimpleStatusServlet extends HttpServlet {
 
     @Override
-    public public void doGet(HttpServletRequest request, HttpServletResponse response)
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
 
         response.setContentType("text/plain");
