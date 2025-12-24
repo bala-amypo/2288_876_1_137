@@ -8,6 +8,7 @@ import com.example.demo.service.RoleService;
 
 import java.util.List;
 
+@Service
 public class RoleServiceImpl implements RoleService {
 
     private final RoleRepository roleRepository;
@@ -25,27 +26,29 @@ public class RoleServiceImpl implements RoleService {
         return roleRepository.save(role);
     }
 
-    // MUST BE primitive long
     @Override
-    public Role updateRole(long id, Role updated) {
-        Role role = roleRepository.findById(id)
+    public Role getRoleById(long id) {
+        return roleRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Role not found"));
-
-        role.setRoleName(updated.getRoleName());
-        role.setDescription(updated.getDescription());
-        return roleRepository.save(role);
-    }
-
-    @Override
-    public void deactivateRole(long id) {
-        Role role = roleRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Role not found"));
-        role.setActive(false);
-        roleRepository.save(role);
     }
 
     @Override
     public List<Role> getAllRoles() {
         return roleRepository.findAll();
+    }
+
+    @Override
+    public Role updateRole(long id, Role role) {
+        Role existing = getRoleById(id);
+        existing.setRoleName(role.getRoleName());
+        existing.setDescription(role.getDescription());
+        return roleRepository.save(existing);
+    }
+
+    @Override
+    public void deactivateRole(long id) {
+        Role role = getRoleById(id);
+        role.setActive(false);
+        roleRepository.save(role);
     }
 }
