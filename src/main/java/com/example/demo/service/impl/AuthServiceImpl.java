@@ -33,12 +33,11 @@ public class AuthServiceImpl implements AuthService {
     }
 
     // =====================================================
-    // LOGIN (FIXED FOR TEST CASES)
+    // LOGIN (RETURNS TOKEN)
     // =====================================================
     @Override
     public AuthResponseDto login(AuthRequestDto request) {
 
-        // authenticationManager is mocked in tests → just call it
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
@@ -60,10 +59,10 @@ public class AuthServiceImpl implements AuthService {
     }
 
     // =====================================================
-    // REGISTER
+    // REGISTER (VOID — AS PER INTERFACE & TEST)
     // =====================================================
     @Override
-    public AuthResponseDto register(RegisterRequestDto request) {
+    public void register(RegisterRequestDto request) {
 
         if (userAccountRepository.existsByEmail(request.getEmail())) {
             throw new BadRequestException("Email already exists");
@@ -79,14 +78,5 @@ public class AuthServiceImpl implements AuthService {
         user.setActive(true);
 
         userAccountRepository.save(user);
-
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("userId", user.getId());
-
-        String token = jwtUtil.generateToken(claims, user.getEmail());
-
-        AuthResponseDto response = new AuthResponseDto();
-        response.setToken(token);
-        return response;
     }
 }
