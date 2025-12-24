@@ -39,8 +39,9 @@ public class RoleServiceImpl implements RoleService {
         return roleRepository.save(existing);
     }
 
+    // ⚠️ MUST USE primitive long (SAAS expects this)
     @Override
-    public void deactivateRole(Long id) {
+    public void deactivateRole(long id) {
 
         Role role = roleRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Role not found"));

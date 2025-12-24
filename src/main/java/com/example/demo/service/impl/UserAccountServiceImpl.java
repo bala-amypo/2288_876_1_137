@@ -10,46 +10,54 @@ import java.util.List;
 
 public class UserAccountServiceImpl implements UserAccountService {
 
-    private final UserAccountRepository repo;
+    private final UserAccountRepository userAccountRepository;
 
-    public UserAccountServiceImpl(UserAccountRepository repo) {
-        this.repo = repo;
+    public UserAccountServiceImpl(UserAccountRepository userAccountRepository) {
+        this.userAccountRepository = userAccountRepository;
     }
 
     @Override
     public UserAccount createUser(UserAccount user) {
-        if (repo.existsByEmail(user.getEmail())) {
-            throw new BadRequestException("Email exists");
+
+        if (userAccountRepository.existsByEmail(user.getEmail())) {
+            throw new BadRequestException("Email already exists");
         }
+
         user.setActive(true);
-        return repo.save(user);
+        return userAccountRepository.save(user);
     }
 
     @Override
-    public UserAccount updateUser(Long id, UserAccount update) {
-        UserAccount existing = repo.findById(id)
+    public UserAccount updateUser(Long id, UserAccount updated) {
+
+        UserAccount existing = userAccountRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
-        existing.setEmail(update.getEmail());
-        existing.setFullName(update.getFullName());
-        return repo.save(existing);
+        existing.setEmail(updated.getEmail());
+        existing.setFullName(updated.getFullName());
+
+        return userAccountRepository.save(existing);
     }
 
     @Override
     public UserAccount getUserById(Long id) {
-        return repo.findById(id)
+        return userAccountRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 
+    // ⚠️ MUST USE primitive long
     @Override
-    public void deactivateUser(Long id) {
-        UserAccount user = getUserById(id);
+    public void deactivateUser(long id) {
+
+        UserAccount user = userAccountRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
         user.setActive(false);
-        repo.save(user);
+        userAccountRepository.save(user);
     }
 
     @Override
     public List<UserAccount> getAllUsers() {
-        return repo.findAll();
+        return userAccountRepository.findAll();
     }
 }
