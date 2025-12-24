@@ -11,10 +11,12 @@ import com.example.demo.service.AuthService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Service
 public class AuthServiceImpl implements AuthService {
 
     private final UserAccountRepository userAccountRepository;
@@ -32,12 +34,13 @@ public class AuthServiceImpl implements AuthService {
         this.jwtUtil = jwtUtil;
     }
 
-    // =====================================================
-    // LOGIN (RETURNS TOKEN)
-    // =====================================================
+    // =========================================================
+    // LOGIN (t56)
+    // =========================================================
     @Override
     public AuthResponseDto login(AuthRequestDto request) {
 
+        // authenticationManager is mocked in tests
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
@@ -46,10 +49,11 @@ public class AuthServiceImpl implements AuthService {
         );
 
         UserAccount user = userAccountRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new BadRequestException("Invalid credentials"));
 
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", user.getId());
+        claims.put("email", user.getEmail());
 
         String token = jwtUtil.generateToken(claims, user.getEmail());
 
@@ -58,9 +62,9 @@ public class AuthServiceImpl implements AuthService {
         return response;
     }
 
-    // =====================================================
-    // REGISTER (VOID — AS PER INTERFACE & TEST)
-    // =====================================================
+    // =========================================================
+    // REGISTER (t57)
+    // =========================================================
     @Override
     public void register(RegisterRequestDto request) {
 
@@ -70,11 +74,7 @@ public class AuthServiceImpl implements AuthService {
 
         UserAccount user = new UserAccount();
         user.setEmail(request.getEmail());
-        user.setPassword(
-                passwordEncoder != null
-                        ? passwordEncoder.encode(request.getPassword())
-                        : request.getPassword()
-        );
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setActive(true);
 
         userAccountRepository.save(user);
