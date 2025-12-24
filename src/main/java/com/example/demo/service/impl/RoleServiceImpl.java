@@ -18,34 +18,28 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Role createRole(Role role) {
-
         if (roleRepository.findByRoleName(role.getRoleName()).isPresent()) {
             throw new BadRequestException("Role already exists");
         }
-
         role.setActive(true);
         return roleRepository.save(role);
     }
 
+    // MUST BE primitive long
     @Override
-    public Role updateRole(Long id, Role updatedRole) {
-
-        Role existing = roleRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Role not found"));
-
-        existing.setRoleName(updatedRole.getRoleName());
-        existing.setDescription(updatedRole.getDescription());
-
-        return roleRepository.save(existing);
-    }
-
-    // ⚠️ MUST USE primitive long (SAAS expects this)
-    @Override
-    public void deactivateRole(long id) {
-
+    public Role updateRole(long id, Role updated) {
         Role role = roleRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Role not found"));
 
+        role.setRoleName(updated.getRoleName());
+        role.setDescription(updated.getDescription());
+        return roleRepository.save(role);
+    }
+
+    @Override
+    public void deactivateRole(long id) {
+        Role role = roleRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Role not found"));
         role.setActive(false);
         roleRepository.save(role);
     }

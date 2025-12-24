@@ -18,40 +18,33 @@ public class UserAccountServiceImpl implements UserAccountService {
 
     @Override
     public UserAccount createUser(UserAccount user) {
-
         if (userAccountRepository.existsByEmail(user.getEmail())) {
             throw new BadRequestException("Email already exists");
         }
-
         user.setActive(true);
         return userAccountRepository.save(user);
     }
 
     @Override
     public UserAccount updateUser(Long id, UserAccount updated) {
-
-        UserAccount existing = userAccountRepository.findById(id)
+        UserAccount user = userAccountRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
-        existing.setEmail(updated.getEmail());
-        existing.setFullName(updated.getFullName());
-
-        return userAccountRepository.save(existing);
+        user.setEmail(updated.getEmail());
+        user.setFullName(updated.getFullName());
+        return userAccountRepository.save(user);
     }
 
+    // MUST BE primitive long
     @Override
-    public UserAccount getUserById(Long id) {
+    public UserAccount getUserById(long id) {
         return userAccountRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 
-    // ⚠️ MUST USE primitive long
     @Override
     public void deactivateUser(long id) {
-
-        UserAccount user = userAccountRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
-
+        UserAccount user = getUserById(id);
         user.setActive(false);
         userAccountRepository.save(user);
     }
