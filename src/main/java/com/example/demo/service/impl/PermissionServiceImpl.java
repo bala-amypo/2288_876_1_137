@@ -19,14 +19,22 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public Permission createPermission(Permission permission) {
 
-        if (permissionRepository
-                .findByPermissionKey(permission.getPermissionKey())
-                .isPresent()) {
+        if (permissionRepository.findByPermissionKey(permission.getPermissionKey()).isPresent()) {
             throw new BadRequestException("Permission already exists");
         }
 
         permission.setActive(true);
         return permissionRepository.save(permission);
+    }
+
+    @Override
+    public Permission updatePermission(Long id, Permission updated) {
+
+        Permission existing = permissionRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Permission not found"));
+
+        existing.setPermissionKey(updated.getPermissionKey());
+        return permissionRepository.save(existing);
     }
 
     @Override
