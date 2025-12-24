@@ -6,6 +6,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 import java.util.Map;
@@ -13,15 +14,15 @@ import java.util.Map;
 @Component
 public class JwtUtil {
 
-    private static final String SECRET_KEY = "saas-secret-key-saas-secret-key"; // >= 32 chars
+    // MUST be >= 32 bytes
+    private static final String SECRET_KEY = "saas-secret-key-very-strong-256-bit-value";
 
     private static final long EXPIRATION_TIME = 60 * 60 * 1000; // 1 hour
 
     private Key getSigningKey() {
-        return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+        return Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
     }
 
-    // Generate token
     public String generateToken(Map<String, Object> claims, String subject) {
         return Jwts.builder()
                 .setClaims(claims)
@@ -32,12 +33,10 @@ public class JwtUtil {
                 .compact();
     }
 
-    // Extract username
     public String getUsername(String token) {
         return getAllClaims(token).getSubject();
     }
 
-    // Validate token
     public boolean isTokenValid(String token, String username) {
         return username.equals(getUsername(token)) && !isTokenExpired(token);
     }
