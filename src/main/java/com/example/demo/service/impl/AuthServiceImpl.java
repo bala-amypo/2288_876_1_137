@@ -1,66 +1,43 @@
 package com.example.demo.service.impl;
 
-import java.time.Instant;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
+import com.example.demo.dto.*;
 import com.example.demo.entity.UserAccount;
+import com.example.demo.exception.BadRequestException;
 import com.example.demo.repository.UserAccountRepository;
 import com.example.demo.security.JwtUtil;
 import com.example.demo.service.AuthService;
-import com.example.demo.dto.AuthRequestDto;
-import com.example.demo.dto.AuthResponseDto;
-import com.example.demo.dto.RegisterRequestDto;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
-@Service
+import java.util.HashMap;
+import java.util.Map;
+
 public class AuthServiceImpl implements AuthService {
 
     private final UserAccountRepository userAccountRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final AuthenticationManager authenticationManager; // REQUIRED BY SAAS
+    private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
 
-    public AuthServiceImpl(
-            UserAccountRepository userAccountRepository,
-            PasswordEncoder passwordEncoder,
-            AuthenticationManager authenticationManager,
-            JwtUtil jwtUtil) {
-
+    public AuthServiceImpl(UserAccountRepository userAccountRepository,
+                           Object passwordEncoderIgnored,
+                           AuthenticationManager authenticationManager,
+                           JwtUtil jwtUtil) {
         this.userAccountRepository = userAccountRepository;
-        this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
     }
 
     @Override
-    public void register(RegisterRequestDto request) {
-
-        UserAccount user = new UserAccount();
-        user.setEmail(request.getEmail());
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setFullName(request.getFullName());
-        user.setActive(true);
-
-       
-        user.setCreatedAt(Instant.now());
-        user.setUpdatedAt(Instant.now());
-
-        userAccountRepository.save(user);
-    }
-
-    @Override
     public AuthResponseDto login(AuthRequestDto request) {
 
-        UserAccount user = userAccountRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new RuntimeException("Invalid email or password"));
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.getEmail(), request.getPassword()
+                )
+        );
 
-        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new RuntimeException("Invalid email or password");
-        }
+        UserAccount user = userAccountRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new BadRequestException("Invalid login"));
 
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", user.getId());
@@ -68,5 +45,13 @@ public class AuthServiceImpl implements AuthService {
         String token = jwtUtil.generateToken(claims, user.getEmail());
 
         return new AuthResponseDto(token);
+    }
+
+    @Override
+    public void register(RegisterRequestDto dto) {
+
+        if (userAccountRepository.existsByEmail(dto.getEmail())) {
+            throw new BadRequestException("Email already exists");
+        }
     }
 }
