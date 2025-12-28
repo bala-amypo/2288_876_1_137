@@ -6,6 +6,21 @@ import com.example.demo.dto.RegisterRequestDto;
 
 public interface AuthService {
 
+    AuthResponseDto login(AuthRequestDto request);
+
+    void register(RegisterRequestDto request);
+}
+
+
+
+package com.example.demo.service;
+
+import com.example.demo.dto.AuthRequestDto;
+import com.example.demo.dto.AuthResponseDto;
+import com.example.demo.dto.RegisterRequestDto;
+
+public interface AuthService {
+
     /**
      * Login user and return JWT token
      * Used in test: t56_authService_loginSuccessWithFixedPassword
