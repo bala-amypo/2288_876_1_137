@@ -34,11 +34,11 @@ public class AuthServiceImpl implements AuthService {
         this.jwtUtil = jwtUtil;
     }
 
-    =========================================================
+    
     @Override
     public AuthResponseDto login(AuthRequestDto request) {
 
-        // authenticationManager is mocked in tests
+    
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
@@ -60,10 +60,7 @@ public class AuthServiceImpl implements AuthService {
         return response;
     }
 
-    // =========================================================
-    // REGISTER (t57)
-    // =========================================================
-    @Override
+        @Override
     public void register(RegisterRequestDto request) {
 
         if (userAccountRepository.existsByEmail(request.getEmail())) {
