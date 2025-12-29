@@ -34,9 +34,7 @@ public class AuthServiceImpl implements AuthService {
         this.jwtUtil = jwtUtil;
     }
 
-    // =========================================================
-    // LOGIN (t56)
-    // =========================================================
+    =========================================================
     @Override
     public AuthResponseDto login(AuthRequestDto request) {
 
